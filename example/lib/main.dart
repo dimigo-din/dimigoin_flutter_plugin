@@ -56,6 +56,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: Text('로그인'),
                     onTap: () => _showLoginDialog(context),
                   ),
+                  ListTile(
+                    leading: Icon(Icons.logout),
+                    title: Text('로그아웃'),
+                    onTap: () {
+                      _dimigoinLogin.logout();
+                      _showToast("로그아웃 되었습니다.");
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text('로그인 후, 유저 관련 정보 조회'),
+                    onTap: () async => _showToast((await _dimigoinLogin.loadUserInfo()).toString()),
+                  ),
                 ],
               ),
             ),
@@ -111,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   GestureDetector(
                     onTap: () async {
                       bool isLogin = await _dimigoinLogin.login(userIdTextController.text, passwordTextController.text);
-                      isLogin ? showToast("로그인에 성공하였습니다.") : showToast("로그인에 실패하였습니다.");
+                      isLogin ? _showToast("로그인에 성공하였습니다.") : _showToast("로그인에 실패하였습니다.");
                     },
                     child: Container(
                       width: _width * 0.4,
@@ -131,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void showToast(String content) => Fluttertoast.showToast(
+  void _showToast(String content) => Fluttertoast.showToast(
       msg: content,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
