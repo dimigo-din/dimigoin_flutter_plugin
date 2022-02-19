@@ -61,7 +61,7 @@ await _dimigoinLogin.loadUserInfo();
 ```dart
 import 'package:dimigoin_flutter_plugin/dimigoin_flutter_plugin.dart';
 
-// 디미고인 로그인 Object 생성
+// 디미고인 급식 Object 생성
 DimigoinMeal _dimigoinMeal = DimigoinMeal();
 
 // 주간 급식 정보 불러오기
