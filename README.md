@@ -10,7 +10,7 @@
 먼저 첫 번째로, `pubspec.yaml`파일에 아래 코드를 작성하여 프로젝트에 본 플러그인을 추가합니다.
 ```yaml
 dependencies:
-  dimigoin_flutter_plugin: ^0.1.0
+  dimigoin_flutter_plugin: ^0.1.1
 ```
 
 본 플러그인에서는 아래 리스트와 같은 패키지를 사용합니다. 개발을 진행할 떄 참고해주세요.
@@ -55,6 +55,20 @@ await _dimigoinLogin.loadSavedToken();
 
 // 로컬 Storage에 저장된 유저 정보 불러오기
 await _dimigoinLogin.loadUserInfo();
+```
+
+디미고인에서 제공하는 급식 정보를 불러오는 코드는 다음과 같습니다.
+```dart
+import 'package:dimigoin_flutter_plugin/dimigoin_flutter_plugin.dart';
+
+// 디미고인 로그인 Object 생성
+DimigoinMeal _dimigoinMeal = DimigoinMeal();
+
+// 주간 급식 정보 불러오기
+List weeklyMeal = await _dimigoinMeal.getWeeklyMeal();
+
+// 일간 급식 정보 불러오기
+Map dailyMeal = await _dimigoinMeal.getDailyMeal(getTodayInfo, date); //getTodayInfo가 true일 경우, date는 작성하지 않습니다.
 ```
 
 ## Author

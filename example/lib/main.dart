@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: '디미고인 플러터 플러그인 Example'),
+      home: const MyHomePage(title: '디미고인 플러터 플러그인 예제'),
     );
   }
 }
@@ -32,6 +32,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   DimigoinLogin _dimigoinLogin = DimigoinLogin();
+  DimigoinMeal _dimigoinMeal = DimigoinMeal();
+
   late double _height, _width;
 
   @override
@@ -68,6 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     leading: Icon(Icons.person),
                     title: Text('로그인 후, 유저 관련 정보 조회'),
                     onTap: () async => _showToast((await _dimigoinLogin.loadUserInfo()).toString()),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.fastfood_rounded),
+                    title: Text('주간 급식 정보 조회'),
+                    onTap: () async => _showToast((await _dimigoinMeal.getWeeklyMeal()).toString()),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.fastfood_rounded),
+                    title: Text('오늘 급식 정보 조회'),
+                    onTap: () async => _showToast((await _dimigoinMeal.getDailyMeal(true)).toString()),
                   ),
                 ],
               ),
