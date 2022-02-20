@@ -13,8 +13,8 @@ class DimigoinLogin {
   /// OAuth 방식을 사용하여, 로그인에 성공할 경우 반환되는 AccessToken과 RefreshToken을 Secure Storage에 저장합니다.
   /// 또한 디미고인 계정 정보를 불러와 Secure Storage에 저장합니다.
   ///
-  /// @param username 사용자의 디미고인 계정 아이디 string형 변수입니다.
-  /// @param password 사용자의 디미고인 계정 비밀번호 string형 변수입니다.
+  /// @param [username] 사용자의 디미고인 계정 아이디 string형 변수입니다.
+  /// @param [password] 사용자의 디미고인 계정 비밀번호 string형 변수입니다.
   /// @returns 로그인에 성공할 경우 true, 실패할 경우 false를 반환합니다.
   login(String userName, String password) async {
     try {
@@ -52,6 +52,28 @@ class DimigoinLogin {
       return false;
     }
   }
+
+  /// 현재 저장되어있는 AccessToken이 유효기간이 남아있는지를 확인합니다.
+  ///
+  /// @returns 유효기간이 남아있을 경우 true, 기간이 만료되었을 경우 false를 반환합니다.
+  validateAccessToken() async {
+    String? accessToken = await _storage.read(key: "dimigoinAccount_accessToken");
+    try {
+      Response response = await _dio.get(
+        "https://api.dimigo.in/user/me",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// 현재 계정이 로그인 되어있는지를 확인합니다.
+  ///
+  /// @returns 로그인 되어있을 경우 true, 되어있지 않은 경우 false를 반환합니다.
+  checkNowLogin() async => (await loadSavedToken()) != null;
 
   /// 현재 서비스에 로그인되어 있는 경우, refreshToken을 활용해 AccessToken을 갱신하는 함수입니다.
   ///

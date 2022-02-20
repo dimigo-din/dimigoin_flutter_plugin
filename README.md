@@ -55,6 +55,12 @@ await _dimigoinLogin.loadSavedToken();
 
 // 로컬 Storage에 저장된 유저 정보 불러오기
 await _dimigoinLogin.loadUserInfo();
+
+// 현재 로컬 Storage에 저장되어 있는 AccessToken의 유효기간이 만료되지 않았는지 확인
+await _dimigoinLogin.validateAccessToken();
+
+// 현재 디미고인 계정에 로그인 되어있는지 확인
+await _dimigoinLogin.checkNowLogin();
 ```
 
 디미고인에서 제공하는 급식 정보를 불러오는 코드는 다음과 같습니다.
