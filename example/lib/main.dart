@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:dimigoin_flutter_plugin/dimigoin_flutter_plugin.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DimigoinFlutterPlugin().initializeApp();
+
   runApp(const MyApp());
 }
 

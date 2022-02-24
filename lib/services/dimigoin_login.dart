@@ -1,13 +1,7 @@
-library dimigoin_flutter_plugin;
-
-import 'dart:convert';
-import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+part of dimigoin_flutter_plugin;
 
 /// 디미고인 로그인 클래스
 class DimigoinLogin {
-  final _dio = Dio();
-  final _storage = const FlutterSecureStorage();
 
   /// 디미고인 계정에 로그인을 진행하는 함수입니다.
   /// OAuth 방식을 사용하여, 로그인에 성공할 경우 반환되는 AccessToken과 RefreshToken을 Secure Storage에 저장합니다.

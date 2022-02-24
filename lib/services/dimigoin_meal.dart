@@ -1,10 +1,7 @@
-library dimigoin_flutter_plugin;
-
-import 'package:dio/dio.dart';
+part of dimigoin_flutter_plugin;
 
 /// 디미고인 급식 클래스
 class DimigoinMeal {
-  final _dio = Dio();
 
   /// 디미고인 서버에서 주간 급식 정보를 불러오는 함수입니다.
   ///
