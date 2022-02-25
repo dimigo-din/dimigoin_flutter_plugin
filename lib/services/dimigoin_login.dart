@@ -13,15 +13,18 @@ class DimigoinLogin {
   login(String userName, String password) async {
     try {
       Response authResponse = await _dio.post(
-        'https://api.dimigo.in/auth',
+        '$apiUrl/auth',
         options: Options(contentType: "application/json"),
         data: {"username": userName, "password": password},
       );
 
       Response infoResponse = await _dio.get(
-        "https://api.dimigo.in/user/me",
+        "$apiUrl/user/me",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer ${authResponse.data['accessToken']}'}),
       );
+
+
+      _accessToken = authResponse.data['accessToken'];
 
       await _storage.write(key: "dimigoinAccount_accessToken", value: authResponse.data['accessToken']);
       await _storage.write(key: "dimigoinAccount_refreshToken", value: authResponse.data['refreshToken']);
@@ -54,7 +57,7 @@ class DimigoinLogin {
     String? accessToken = await _storage.read(key: "dimigoinAccount_accessToken");
     try {
       Response response = await _dio.get(
-        "https://api.dimigo.in/user/me",
+        "$apiUrl/user/me",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $accessToken'}),
       );
 
@@ -77,11 +80,12 @@ class DimigoinLogin {
       String? refreshToken = await _storage.read(key: "dimigoinAccount_refreshToken");
 
       Response response = await _dio.post(
-        'https://api.dimigo.in/auth/refresh',
+        '$apiUrl/auth/refresh',
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $refreshToken'}),
         data: {"refreshtoken": refreshToken},
       );
 
+      _accessToken = response.data['accessToken'];
       await _storage.write(key: "dimigoinAccount_accessToken", value: response.data['accessToken']);
       await _storage.write(key: "dimigoinAccount_refreshToken", value: response.data['refreshToken']);
 

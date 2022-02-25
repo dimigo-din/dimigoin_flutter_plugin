@@ -36,6 +36,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   DimigoinLogin _dimigoinLogin = DimigoinLogin();
   DimigoinMeal _dimigoinMeal = DimigoinMeal();
+  DalgeurakService _dalgeurakService = DalgeurakService();
 
   late double _height, _width;
 
@@ -83,6 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     leading: Icon(Icons.fastfood_rounded),
                     title: Text('오늘 급식 정보 조회'),
                     onTap: () async => _showToast((await _dimigoinMeal.getDailyMeal(true)).toString()),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.fastfood_rounded),
+                    title: Text('달그락 API - 현재 학생 현재 입장 여부, 선/후밥 여부 확인하기'),
+                    onTap: () async => _showToast((await _dalgeurakService.getUserMealInfo()).toString()),
                   ),
                 ],
               ),

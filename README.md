@@ -10,7 +10,7 @@
 먼저 첫 번째로, `pubspec.yaml`파일에 아래 코드를 작성하여 프로젝트에 본 플러그인을 추가합니다.
 ```yaml
 dependencies:
-  dimigoin_flutter_plugin: ^0.1.2
+  dimigoin_flutter_plugin: ^0.2.0
 ```
 
 본 플러그인에서는 아래 리스트와 같은 패키지를 사용합니다. 개발을 진행할 떄 참고해주세요.
@@ -20,7 +20,7 @@ dependencies:
 
 ### 프로젝트 사전 작업
 본 플러그인은 flutter_secure_storage 패키지를 사용하며, 그로 인해 실행하기 위해선 최저 안드로이드 버전을 설정해주어야 합니다.
-`android/app/build.gradle`파일의 `minSdkVersion`을 18 이상으로 바꾸어주세요.
+`android/app/build.gradle` 파일의 `minSdkVersion`을 18 이상으로 바꾸어주세요.
 ```gradle
 android {
     ..
@@ -33,6 +33,19 @@ android {
 ```
 
 ### 구현 가이드
+
+먼저 플러그인을 사용하기 위하여, 어플리케이션을 시작함과 동시에 본 플러그인을 초기화 시켜주어야 합니다.
+`main.dart` 파일에 아래 코드를 추가해주세요.
+```dart
+import 'package:dimigoin_flutter_plugin/dimigoin_flutter_plugin.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DimigoinFlutterPlugin().initializeApp();
+
+  runApp(MyApp());
+}
+```
 
 디미고인 계정 로그인을 구현하는 코드는 다음과 같습니다.
 ```dart
@@ -75,6 +88,41 @@ List weeklyMeal = await _dimigoinMeal.getWeeklyMeal();
 
 // 일간 급식 정보 불러오기
 Map dailyMeal = await _dimigoinMeal.getDailyMeal(getTodayInfo, date); //getTodayInfo가 true일 경우, date는 작성하지 않습니다.
+```
+
+달그락 서비스와 관련된 API를 사용하는 코드는 다음과 같습니다. 서비스에 자주 사용하는 함수만 작성하였으니, 모든 함수를 확인하시고 싶으시다면 [API Reference](https://pub.dev/documentation/dimigoin_flutter_plugin/latest/)를 확인해주세요.
+```dart
+import 'package:dimigoin_flutter_plugin/dimigoin_flutter_plugin.dart';
+
+// 달그락 서비스 Object 생성
+DalgeurakService _dalgeurakService = DalgeurakService();
+
+// 학생 본인이 체크인 진행
+Map result = await _dalgeurakService.mealCheckInByMyself();
+
+// 관리자가 체크인 진행
+Map result = await _dalgeurakService.mealCheckInByManager(studentId, studentName);
+
+// 학생이 직접 선/후밥을 신청
+Map result = await _dalgeurakService.setUserMealException(exceptionType, reason);
+
+// 학생의 현재 입장 여부, 선/후밥 여부를 확인
+Map result = await _dalgeurakService.getUserMealInfo();
+
+// 모든 학년의 급식 반 순서 불러오기
+Map result = await _dalgeurakService.getMealSequence();
+
+// 각 학년의 급식 반 순서 지정하기
+Map result = await _dalgeurakService.setMealSequence(grade, mealType, sequence);
+
+// 모든 학년의 급식 시간 불러오기
+Map result = await _dalgeurakService.getMealTime();
+
+// 각 학년의 급식 시간 지정하기
+Map result = await _dalgeurakService.setMealTime(grade, mealType, time);
+
+// 급식 줄이 밀렸을 경우 반의 급식 시간들을 미루기
+Map result = await _dalgeurakService.setMealExtraTime();
 ```
 
 ## Author
