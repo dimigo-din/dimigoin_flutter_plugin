@@ -10,7 +10,7 @@
 먼저 첫 번째로, `pubspec.yaml`파일에 아래 코드를 작성하여 프로젝트에 본 플러그인을 추가합니다.
 ```yaml
 dependencies:
-  dimigoin_flutter_plugin: ^0.2.0
+  dimigoin_flutter_plugin: ^0.2.1
 ```
 
 본 플러그인에서는 아래 리스트와 같은 패키지를 사용합니다. 개발을 진행할 떄 참고해주세요.
@@ -52,28 +52,31 @@ void main() async {
 import 'package:dimigoin_flutter_plugin/dimigoin_flutter_plugin.dart';
 
 // 디미고인 로그인 Object 생성
-DimigoinLogin _dimigoinLogin = DimigoinLogin();
+DimigoinAccount _dimigoinAccount = DimigoinAccount();
+
+// 현재 로그인 되어 있을 경우, 저장되어 있는 계정 정보 불러오기
+DimigoinUser currentUser = _dimigoinAccount.currentUser;
+
+// 현재 로그인 되어 있을 경우, 서버에 저장되어있는 계정 정보 받아오기
+await _dimigoinAccount.fetchAccountData();
 
 // 계정 로그인
-bool isLoginSuccess = await _dimigoinLogin.login(userId, userPassword);
+bool isLoginSuccess = await _dimigoinAccount.login(userId, userPassword);
 
 // 계정 로그아웃
-bool isLogoutSuccess = await _dimigoinLogin.logout();
+bool isLogoutSuccess = await _dimigoinAccount.logout();
 
 // RefreshToken을 이용한 AccessToken Refresh
-bool isTokenRefreshSuccess = await _dimigoinLogin.refreshAccessToken();
+bool isTokenRefreshSuccess = await _dimigoinAccount.refreshAccessToken();
 
 // 로컬 Storage에 저장된 AccessToken 불러오기
-await _dimigoinLogin.loadSavedToken();
-
-// 로컬 Storage에 저장된 유저 정보 불러오기
-await _dimigoinLogin.loadUserInfo();
+await _dimigoinAccount.loadSavedToken();
 
 // 현재 로컬 Storage에 저장되어 있는 AccessToken의 유효기간이 만료되지 않았는지 확인
-bool isValidateAccessToken = await _dimigoinLogin.validateAccessToken();
+bool isValidateAccessToken = await _dimigoinAccount.validateAccessToken();
 
 // 현재 디미고인 계정에 로그인 되어있는지 확인
-bool isNowLogin = await _dimigoinLogin.checkNowLogin();
+bool isNowLogin = await _dimigoinAccount.checkNowLogin();
 ```
 
 디미고인에서 제공하는 급식 정보를 불러오는 코드는 다음과 같습니다.

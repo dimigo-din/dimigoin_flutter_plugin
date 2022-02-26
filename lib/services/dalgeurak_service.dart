@@ -66,8 +66,8 @@ extension MealTypeExtension on MealType {
   }
 }
 
-/// 달그락 서비스와 관련된 모든 열거형을 위한 Extension
-extension DalgeurakTypeExtension on String {
+/// 달그락 서비스의 급식과 관련된 열거형을 위한 Extension
+extension DalgeurakMealTypeExtension on String {
   MealStatusType get convertMealStatusType {
     switch (this) {
       case "onTime": return MealStatusType.onTime;

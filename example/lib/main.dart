@@ -34,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DimigoinLogin _dimigoinLogin = DimigoinLogin();
+  DimigoinAccount _dimigoinAccount = DimigoinAccount();
   DimigoinMeal _dimigoinMeal = DimigoinMeal();
   DalgeurakService _dalgeurakService = DalgeurakService();
 
@@ -66,14 +66,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     leading: Icon(Icons.logout),
                     title: Text('로그아웃'),
                     onTap: () {
-                      _dimigoinLogin.logout();
+                      _dimigoinAccount.logout();
                       _showToast("로그아웃 되었습니다.");
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.person),
                     title: Text('로그인 후, 유저 관련 정보 조회'),
-                    onTap: () async => _showToast((await _dimigoinLogin.loadUserInfo()).toString()),
+                    onTap: () async => _showToast((_dimigoinAccount.currentUser.toJson()).toString()),
                   ),
                   ListTile(
                     leading: Icon(Icons.fastfood_rounded),
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _dimigoinLogin.refreshAccessToken(),
+        onPressed: () => _dimigoinAccount.refreshAccessToken(),
         child: Icon(Icons.refresh_rounded),
       ),
     );
@@ -144,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: _height * 0.075),
                   GestureDetector(
                     onTap: () async {
-                      bool isLogin = await _dimigoinLogin.login(userIdTextController.text, passwordTextController.text);
+                      bool isLogin = await _dimigoinAccount.login(userIdTextController.text, passwordTextController.text);
                       isLogin ? _showToast("로그인에 성공하였습니다.") : _showToast("로그인에 실패하였습니다.");
                     },
                     child: Container(

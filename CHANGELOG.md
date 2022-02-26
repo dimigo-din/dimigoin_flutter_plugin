@@ -1,3 +1,8 @@
+## 0.2.1
+
+- **ADD**: Dimigoin User Model
+- **MODIFY**: Dimigoin Account Class Function
+
 ## 0.2.0
 
 - **ADD**: Dalgeurak Service API
