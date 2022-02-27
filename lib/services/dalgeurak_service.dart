@@ -58,10 +58,21 @@ extension MealExceptionTypeExtension on MealExceptionType {
 
 /// 급식 타입 열거형을 위한 Extension
 extension MealTypeExtension on MealType {
-  String get convertStr {
+  String get convertEngStr {
     switch (this) {
+      case MealType.breakfast: return "breakfast";
       case MealType.lunch: return "lunch";
       case MealType.dinner: return "dinner";
+      default:
+        return "";
+    }
+  }
+
+  String get convertKorStr {
+    switch (this) {
+      case MealType.breakfast: return "아침";
+      case MealType.lunch: return "점심";
+      case MealType.dinner: return "저녁";
       default:
         return "";
     }
@@ -248,7 +259,7 @@ class DalgeurakService {
       Response response = await _dio.patch(
         "$apiUrl/dalgeurak/sequence/$grade",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"time": mealType.convertStr, "sequences": sequence},
+        data: {"time": mealType.convertEngStr, "sequences": sequence},
       );
 
       return {
@@ -288,7 +299,7 @@ class DalgeurakService {
       Response response = await _dio.patch(
         "$apiUrl/dalgeurak/time/$grade",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"time": mealType.convertStr, "classTimes": time},
+        data: {"time": mealType.convertEngStr, "classTimes": time},
       );
 
       return {

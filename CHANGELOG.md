@@ -1,3 +1,7 @@
+## 0.2.4
+
+- **MODIFY**: Dalgeurak Service - MealType ConvertStr Function
+
 ## 0.2.3
 
 - **ADD**: Dalgeurak Service - getMealType Function
