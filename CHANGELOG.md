@@ -1,3 +1,7 @@
+## 0.2.2
+
+- **ADD**: Dimigoin User Change Stream
+
 ## 0.2.1
 
 - **ADD**: Dimigoin User Model

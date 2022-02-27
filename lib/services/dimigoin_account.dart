@@ -4,6 +4,7 @@ part of dimigoin_flutter_plugin;
 class DimigoinAccount {
 
   DimigoinUser get currentUser => _currentUser;
+  Stream<DimigoinUser?> get userChangeStream => _userChangeController.stream;
 
   /// 디미고인 계정에 로그인을 진행하는 함수입니다.
   /// OAuth 방식을 사용하여, 로그인에 성공할 경우 반환되는 AccessToken과 RefreshToken을 Secure Storage에 저장합니다.
@@ -40,6 +41,8 @@ class DimigoinAccount {
       await _storage.delete(key: "dimigoinAccount_accessToken");
       await _storage.delete(key: "dimigoinAccount_refreshToken");
       await _storage.delete(key: "dimigoinAccount_userInfo");
+      _userChangeController.add(null);
+
       return true;
     } catch (e) {
       return false;
@@ -110,6 +113,7 @@ class DimigoinAccount {
 
       await _storage.write(key: "dimigoinAccount_userInfo", value: json.encode(infoResponse.data['identity']));
       _currentUser = DimigoinUser.fromJson(infoResponse.data['identity']);
+      _userChangeController.add(_currentUser);
 
       return true;
     } catch (e) {
@@ -122,6 +126,6 @@ class DimigoinAccount {
     if (!(await validateAccessToken())) { await refreshAccessToken(); }
 
     bool isSuccessStoreData = await storeUserData();
-    if (!isSuccessStoreData) { _currentUser = DimigoinUser.fromJson(json.decode((await _storage.read(key: "dimigoinAccount_userInfo"))!)); }
+    if (!isSuccessStoreData) { _currentUser = DimigoinUser.fromJson(json.decode((await _storage.read(key: "dimigoinAccount_userInfo"))!)); _userChangeController.add(_currentUser); }
   }
 }

@@ -10,7 +10,7 @@
 먼저 첫 번째로, `pubspec.yaml`파일에 아래 코드를 작성하여 프로젝트에 본 플러그인을 추가합니다.
 ```yaml
 dependencies:
-  dimigoin_flutter_plugin: ^0.2.1
+  dimigoin_flutter_plugin: ^0.2.2
 ```
 
 본 플러그인에서는 아래 리스트와 같은 패키지를 사용합니다. 개발을 진행할 떄 참고해주세요.
@@ -56,6 +56,9 @@ DimigoinAccount _dimigoinAccount = DimigoinAccount();
 
 // 현재 로그인 되어 있을 경우, 저장되어 있는 계정 정보 불러오기
 DimigoinUser currentUser = _dimigoinAccount.currentUser;
+
+// 계정 정보 변동시 자동으로 계정 정보를 DimigoinUser 형태로 보내주는 Stream
+Stream<DimigoinUser?> userChangeStream = _dimigoinAccount.userChangeStream;
 
 // 현재 로그인 되어 있을 경우, 서버에 저장되어있는 계정 정보 받아오기
 await _dimigoinAccount.fetchAccountData();

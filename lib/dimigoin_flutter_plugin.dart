@@ -1,5 +1,6 @@
 library dimigoin_flutter_plugin;
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -20,6 +21,7 @@ DimigoinAccount _dimigoinLogin = DimigoinAccount();
 
 late String _accessToken;
 late DimigoinUser _currentUser;
+StreamController<DimigoinUser?> _userChangeController = StreamController<DimigoinUser?>();
 
 class DimigoinFlutterPlugin {
   initializeApp() async {
@@ -27,6 +29,8 @@ class DimigoinFlutterPlugin {
       _accessToken = await _dimigoinLogin.loadSavedToken();
 
       await _dimigoinLogin.fetchAccountData();
+    } else {
+      _userChangeController.add(null);
     }
   }
 }

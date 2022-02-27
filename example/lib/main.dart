@@ -53,6 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            StreamBuilder(
+                stream: _dimigoinAccount.userChangeStream,
+                builder: (context, snapshot) => Text("현재 로그인 되어있는 유저 이름: ${(snapshot.data as DimigoinUser?)?.name.toString()}")
+            ),
+            SizedBox(height: _height * 0.075),
             SizedBox(
               height: _height * 0.4,
               child: ListView(
