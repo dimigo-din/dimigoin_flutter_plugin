@@ -2,6 +2,8 @@ part of dimigoin_flutter_plugin;
 
 /// 급식 타입 열거형
 enum MealType {
+  /// 급식 아침시간
+  breakfast,
   /// 급식 점심시간
   lunch,
   /// 급식 저녁시간
@@ -383,5 +385,22 @@ class DalgeurakService {
         "content": e.response?.data["message"]
       };
     }
+  }
+
+  /// 현재 시간에 어느 종류의 급식을 먹는지 반환해주는 함수입니다.
+  getMealKind(bool includeBreakfast) {
+    String nowMinute = DateTime.now().minute.toString(); if (int.parse(nowMinute) < 10) { nowMinute = "0$nowMinute"; }
+    int nowTime = int.parse("${DateTime.now().hour}$nowMinute");
+
+    MealType mealKind;
+    if ((nowTime < 0830 || nowTime >= 2000) && includeBreakfast) {
+      mealKind = MealType.breakfast;
+    } else if (nowTime < 1400 || nowTime >= 2000) {
+      mealKind = MealType.lunch;
+    } else {
+      mealKind = MealType.dinner;
+    }
+
+    return mealKind;
   }
 }

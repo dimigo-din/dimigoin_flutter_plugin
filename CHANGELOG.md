@@ -1,3 +1,7 @@
+## 0.2.3
+
+- **ADD**: Dalgeurak Service - getMealType Function
+
 ## 0.2.2
 
 - **ADD**: Dimigoin User Change Stream
