@@ -399,7 +399,7 @@ class DalgeurakService {
   }
 
   /// 현재 시간에 어느 종류의 급식을 먹는지 반환해주는 함수입니다.
-  getMealKind(bool includeBreakfast) {
+  MealType getMealKind(bool includeBreakfast) {
     String nowMinute = DateTime.now().minute.toString(); if (int.parse(nowMinute) < 10) { nowMinute = "0$nowMinute"; }
     int nowTime = int.parse("${DateTime.now().hour}$nowMinute");
 
