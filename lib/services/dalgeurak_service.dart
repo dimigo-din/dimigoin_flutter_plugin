@@ -398,6 +398,23 @@ class DalgeurakService {
     }
   }
 
+  /// 현재 급식 순서인 반을 반환해주는 함수입니다.
+  getNowSequenceClass() async {
+    try {
+      Response response = await _dio.get("$apiUrl/dalgeurak/nowSequence");
+
+      return {
+        "success": true,
+        "content": response.data['nowSequence']
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 현재 시간에 어느 종류의 급식을 먹는지 반환해주는 함수입니다.
   MealType getMealKind(bool includeBreakfast) {
     String nowMinute = DateTime.now().minute.toString(); if (int.parse(nowMinute) < 10) { nowMinute = "0$nowMinute"; }

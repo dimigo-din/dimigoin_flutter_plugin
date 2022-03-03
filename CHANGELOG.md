@@ -1,3 +1,7 @@
+## 0.2.6
+
+- **ADD**: Dalgeurak Service - getNowSequenceClass Function
+
 ## 0.2.5
 
 - **MODIFY**: Dalgeurak Service - getMealKind Function
