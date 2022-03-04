@@ -1,3 +1,7 @@
+## 0.2.7
+
+- **FIX**: Dalgeurak Service getNowSequenceClass Function - Auth Error
+
 ## 0.2.6
 
 - **ADD**: Dalgeurak Service - getNowSequenceClass Function

@@ -401,7 +401,10 @@ class DalgeurakService {
   /// 현재 급식 순서인 반을 반환해주는 함수입니다.
   getNowSequenceClass() async {
     try {
-      Response response = await _dio.get("$apiUrl/dalgeurak/nowSequence");
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/nowSequence",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
 
       return {
         "success": true,
