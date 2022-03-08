@@ -110,11 +110,12 @@ extension DalgeurakMealTypeExtension on String {
 /// 달그락 서비스 API 클래스
 class DalgeurakService {
   /// 학생 본인이 직접 체크인을 진행하는 함수입니다.
-  mealCheckInByMyself() async {
+  mealCheckInWithJWT(String jwtToken) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"key": jwtToken},
       );
 
       return {
@@ -305,6 +306,25 @@ class DalgeurakService {
       return {
         "success": true,
         "content": response.data["classTimes"]
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 급식 줄이 밀렸을 경우 설정되는 지연 시간을 받아오는 함수입니다.
+  getMealExtraTime(int time) async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/extraTime",
+      );
+
+      return {
+        "success": true,
+        "content": response.data
       };
     } on DioError catch (e) {
       return {

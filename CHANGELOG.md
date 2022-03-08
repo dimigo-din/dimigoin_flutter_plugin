@@ -1,3 +1,8 @@
+## 0.2.8
+
+- **MODIFY**: Dalgeurak Service - mealCheckInWithJWT(Old Name: mealCheckInBySelf) Function
+- **ADD**: Dalgeurak Service - getMealExtraTime Function
+
 ## 0.2.7
 
 - **FIX**: Dalgeurak Service getNowSequenceClass Function - Auth Error
