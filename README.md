@@ -103,8 +103,8 @@ import 'package:dimigoin_flutter_plugin/dimigoin_flutter_plugin.dart';
 // 달그락 서비스 Object 생성
 DalgeurakService _dalgeurakService = DalgeurakService();
 
-// 학생 본인이 체크인 진행
-Map result = await _dalgeurakService.mealCheckInByMyself();
+// 학생 본인이 체크인 진행 - getUserMealInfo 함수를 통해 받은 토큰을 매개변수 값으로 입력함
+Map result = await _dalgeurakService.mealCheckInWithJWT(jwtToken);
 
 // 관리자가 체크인 진행
 Map result = await _dalgeurakService.mealCheckInByManager(studentId, studentName);
