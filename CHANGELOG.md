@@ -1,3 +1,8 @@
+## 0.3.0
+
+- **ADD**: Dalgeurak Service - registerFCMToken, removeFCMToken, getAllStudentList Function
+- **MODIFY**: Dimigoin User Model - mealStatus
+
 ## 0.2.8
 
 - **MODIFY**: Dalgeurak Service - mealCheckInWithJWT(Old Name: mealCheckInBySelf) Function

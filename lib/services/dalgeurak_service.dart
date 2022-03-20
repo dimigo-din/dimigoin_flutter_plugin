@@ -438,6 +438,72 @@ class DalgeurakService {
     }
   }
 
+  /// 현재 기기의 FCM Token을 서버에 등록하는 함수입니다.
+  registerFCMToken(String token) async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/token",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"deviceToken": token},
+      );
+
+      return {
+        "success": true,
+        "content": response.data['registeredTokens']
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 유저의 FCM Token 중 원하는 Token을 서버에서 제거하는 함수입니다.
+  removeFCMToken(String token) async {
+    try {
+      Response response = await _dio.delete(
+        "$apiUrl/dalgeurak/token",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"deviceToken": token},
+      );
+
+      return {
+        "success": true,
+        "content": response.data['registeredTokens']
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 현재 디미고인에 등록되어있는 모든 학생들의 정보를 리스트 형태로 반환하는 함수입니다.
+  getAllStudentList() async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/user/student",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      List originalData = response.data['students'];
+      List formattingData = [];
+      originalData.forEach((element) => formattingData.add(DimigoinUser.fromJson(element)));
+
+      return {
+        "success": true,
+        "content": formattingData
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 현재 시간에 어느 종류의 급식을 먹는지 반환해주는 함수입니다.
   MealType getMealKind(bool includeBreakfast) {
     String nowMinute = DateTime.now().minute.toString(); if (int.parse(nowMinute) < 10) { nowMinute = "0$nowMinute"; }

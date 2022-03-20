@@ -88,6 +88,7 @@ class DimigoinUser {
   String? _gender;
   String? _createdAt;
   String? _updatedAt;
+  String? _mealStatus;
   int? _classNum;
   int? _gradeNum;
   int? _studentNum;
@@ -105,6 +106,7 @@ class DimigoinUser {
   String? get gender => _gender;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
+  String? get mealStatus => _mealStatus;
   int? get classNum => _classNum;
   int? get gradeNum => _gradeNum;
   int? get studentNum => _studentNum;
@@ -124,6 +126,7 @@ class DimigoinUser {
     required String gender,
     required String createdAt,
     required String updatedAt,
+    required String mealStatus,
     required int classNum,
     required int gradeNum,
     required int studentNum,
@@ -140,6 +143,7 @@ class DimigoinUser {
     _gender = gender;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
+    _mealStatus = mealStatus;
     _classNum = classNum;
     _gradeNum = gradeNum;
     _studentNum = studentNum;
@@ -159,6 +163,7 @@ class DimigoinUser {
     _gender = json['gender'];
     _createdAt = json['createdAt'];
     _updatedAt = json['updatedAt'];
+    _mealStatus = json['mealStatus'];
     _classNum = json['class'];
     _gradeNum = json['grade'];
     _studentNum = json['number'];
@@ -189,6 +194,7 @@ class DimigoinUser {
     map['gender'] = _gender;
     map['createdAt'] = _createdAt;
     map['updatedAt'] = _updatedAt;
+    map['mealStatus'] = _mealStatus;
     map['class'] = _classNum;
     map['grade'] = _gradeNum;
     map['number'] = _studentNum;

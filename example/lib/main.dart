@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(height: _height * 0.075),
             SizedBox(
-              height: _height * 0.4,
+              height: _height * 0.5,
               child: ListView(
                 children: <Widget>[
                   ListTile(
