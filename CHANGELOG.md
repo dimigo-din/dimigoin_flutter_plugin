@@ -1,3 +1,7 @@
+## 0.3.2
+
+- **MODIFY**: Dalgeurak Service - getMealExtraTime Function CRUD Operation
+
 ## 0.3.1
 
 - **MODIFY**: Dalgeurak Service - getMealExtraTime Function Parameter
