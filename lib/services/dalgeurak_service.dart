@@ -316,7 +316,7 @@ class DalgeurakService {
   }
 
   /// 급식 줄이 밀렸을 경우 설정되는 지연 시간을 받아오는 함수입니다.
-  getMealExtraTime(int time) async {
+  getMealExtraTime() async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/extraTime",

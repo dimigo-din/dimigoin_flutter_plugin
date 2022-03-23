@@ -1,3 +1,7 @@
+## 0.3.1
+
+- **MODIFY**: Dalgeurak Service - getMealExtraTime Function Parameter
+
 ## 0.3.0
 
 - **ADD**: Dalgeurak Service - registerFCMToken, removeFCMToken, getAllStudentList Function

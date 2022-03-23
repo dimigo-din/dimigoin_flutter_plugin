@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ListTile(
                     leading: Icon(Icons.fastfood_rounded),
-                    title: Text('달그락 API - 현재 학생 현재 입장 여부, 선/후밥 여부 확인하기'),
+                    title: Text('달그락 API - 내 급식 관련 정보 가져오기'),
                     onTap: () async => _showToast((await _dalgeurakService.getUserMealInfo()).toString()),
                   ),
                 ],
