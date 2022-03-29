@@ -57,6 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 stream: _dimigoinAccount.userChangeStream,
                 builder: (context, snapshot) => Text("현재 로그인 되어있는 유저 이름: ${(snapshot.data as DimigoinUser?)?.name.toString()}")
             ),
+            StreamBuilder(
+                stream: _dalgeurakService.studentMealStatusStream,
+                builder: (context, snapshot) => Text("전교생 급식 상태 변경 Stream 입력: ${snapshot.data.toString()}")
+            ),
             SizedBox(height: _height * 0.075),
             SizedBox(
               height: _height * 0.5,

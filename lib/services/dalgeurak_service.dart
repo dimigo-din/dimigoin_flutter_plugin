@@ -109,6 +109,9 @@ extension DalgeurakMealTypeExtension on String {
 
 /// 달그락 서비스 API 클래스
 class DalgeurakService {
+
+  Stream<dynamic>? get studentMealStatusStream => _studentMealStatusStreamSocket.getResponse;
+
   /// 학생 본인이 직접 체크인을 진행하는 함수입니다.
   mealCheckInWithJWT(String jwtToken) async {
     try {
@@ -502,6 +505,46 @@ class DalgeurakService {
         "content": e.response?.data["message"]
       };
     }
+  }
+
+  /// 현재 디미고인에 등록되어있는 모든 1, 2학년 학생들의 급식 상태를 리스트 형태로 반환하는 함수입니다.
+  getAllStudentMealStatus() async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/mealStatus",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      Map originalData = response.data['mealStatuses'];
+      Map formattingData = {};
+      originalData.forEach((key, value) => formattingData.addAll({key: value.toString().convertMealStatusType}));
+
+      return {
+        "success": true,
+        "content": formattingData
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 전교생의 급식 상태 변경시 자동으로 받아오는 WebSocket의 Stream을 반환해주는 함수입니다.
+  connectStudentMealStatusWebSocket() {
+    SocketIo.Socket socket = SocketIo.io('$socketApiUrl/dalgeurak', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': true,
+    });
+
+    socket.onConnect((_) => socket.emit('mealStatusJoinRoom'));
+
+    socket.onConnectError((data) => print("ConnectError: $data"));
+
+    socket.on('mealStatus', (data) => _studentMealStatusStreamSocket.registerNewData(data) );
+
+    socket.connect();
   }
 
   /// 현재 시간에 어느 종류의 급식을 먹는지 반환해주는 함수입니다.

@@ -1,3 +1,8 @@
+## 0.3.3
+
+- **ADD**: Dalgeurak Student MealStatus Change Stream
+- **ADD**: Dalgeurak Service - connectStudentMealStatusWebSocket, getAllStudentMealStatus Function
+
 ## 0.3.2
 
 - **MODIFY**: Dalgeurak Service - getMealExtraTime Function CRUD Operation
