@@ -44,6 +44,20 @@ enum MealStatusType {
   rejected
 }
 
+/// 학생의 경고 유형 열거형
+enum StudentWarningType {
+  /// 지각
+  tardy,
+  /// 욕설
+  abuse,
+  /// 통로 사용
+  useHallway,
+  /// 순서 무시
+  ignoreSequence,
+  // 기타 사유
+  etc
+}
+
 /// 급식 선/후밥 열거형을 위한 Extension
 extension MealExceptionTypeExtension on MealExceptionType {
   String get convertStr {
@@ -79,6 +93,20 @@ extension MealTypeExtension on MealType {
   }
 }
 
+/// 학생의 경고 유형 열거형을 위한 Extension
+extension StudentWarningTypeExtension on StudentWarningType {
+  String get convertStr {
+    switch (this) {
+      case StudentWarningType.tardy: return "tardy";
+      case StudentWarningType.abuse: return "abuse";
+      case StudentWarningType.useHallway: return "useHallway";
+      case StudentWarningType.ignoreSequence: return "ignoreSequence";
+      case StudentWarningType.etc: return "etc";
+      default: return "";
+    }
+  }
+}
+
 /// 달그락 서비스의 급식과 관련된 열거형을 위한 Extension
 extension DalgeurakMealTypeExtension on String {
   MealStatusType get convertMealStatusType {
@@ -102,6 +130,17 @@ extension DalgeurakMealTypeExtension on String {
       case "last": return MealExceptionType.last;
       case "normal": return MealExceptionType.normal;
       default: return MealExceptionType.normal;
+    }
+  }
+
+  StudentWarningType get convertStudentWarningType {
+    switch (this) {
+      case "tardy": return StudentWarningType.tardy;
+      case "abuse": return StudentWarningType.abuse;
+      case "useHallway": return StudentWarningType.useHallway;
+      case "ignoreSequence": return StudentWarningType.ignoreSequence;
+      case "etc": return StudentWarningType.etc;
+      default: return StudentWarningType.etc;
     }
   }
 }
@@ -145,6 +184,29 @@ class DalgeurakService {
       return {
         "success": true,
         "content": response.data['mealStatus'].toString().convertMealStatusType
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 디넌이 학생에게 경고를 부여하는 함수입니다.
+  giveWarningToStudent(String studentObjId, List warningType, String reason) async {
+    try {
+      warningType.forEach((element) => warningType[warningType.indexOf(element)] = (element as StudentWarningType).convertStr);
+
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/warning",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"sid": studentObjId, "type": warningType, "reason": reason},
+      );
+
+      return {
+        "success": true,
+        "content": response.data['warning']
       };
     } on DioError catch (e) {
       return {

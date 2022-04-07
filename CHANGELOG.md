@@ -1,3 +1,7 @@
+## 0.3.4
+
+- **ADD**: Dalgeurak Service - giveWarningToStudent Function
+
 ## 0.3.3
 
 - **ADD**: Dalgeurak Student MealStatus Change Stream
