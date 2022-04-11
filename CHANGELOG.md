@@ -1,3 +1,7 @@
+## 0.3.6
+
+- **MODIFY**: Dalgeurak Service - mealCheckInByManager, authorizeDienenPermission, removeDienenPermission, mandateDienenLeaderPermission Function Parameter
+
 ## 0.3.5
 
 - **MODIFY**: Dalgeurak Service - getAllStudentList Function API URL

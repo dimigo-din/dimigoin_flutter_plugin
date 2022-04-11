@@ -173,12 +173,12 @@ class DalgeurakService {
   }
 
   /// 디넌이 수동으로 학생의 체크인을 진행하는 함수입니다.
-  mealCheckInByManager(int studentId, String studentName) async {
+  mealCheckInByManager(String studentObjId) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/entrance",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"serial": studentId, "name": studentName},
+        data: {"sid": studentObjId},
       );
 
       return {
@@ -421,12 +421,12 @@ class DalgeurakService {
   }
 
   /// 학생에게 디넌 권한을 부여하는 함수입니다.
-  authorizeDienenPermission(int studentId, String studentName) async {
+  authorizeDienenPermission(String studentObjId) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak-management/permission",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"serial": studentId, "name": studentName},
+        data: {"sid": studentObjId},
       );
 
       return {
@@ -442,12 +442,12 @@ class DalgeurakService {
   }
 
   /// 학생에게 디넌 권한을 제거하는 함수입니다.
-  removeDienenPermission(int studentId, String studentName) async {
+  removeDienenPermission(String studentObjId) async {
     try {
       Response response = await _dio.delete(
         "$apiUrl/dalgeurak-management/permission",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"serial": studentId, "name": studentName},
+        data: {"sid": studentObjId},
       );
 
       return {
@@ -463,12 +463,12 @@ class DalgeurakService {
   }
 
   /// 학생에게 디넌장 권한을 위임하는 함수입니다.
-  mandateDienenLeaderPermission(int studentId, String studentName) async {
+  mandateDienenLeaderPermission(String studentObjId) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak-management/mandate",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"serial": studentId, "name": studentName},
+        data: {"sid": studentObjId},
       );
 
       return {
