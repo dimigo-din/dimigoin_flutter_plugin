@@ -549,7 +549,7 @@ class DalgeurakService {
   getAllStudentList() async {
     try {
       Response response = await _dio.get(
-        "$apiUrl/user/student",
+        "$apiUrl/dalgeurak/student",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
       );
 

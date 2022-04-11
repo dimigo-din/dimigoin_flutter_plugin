@@ -1,3 +1,7 @@
+## 0.3.5
+
+- **MODIFY**: Dalgeurak Service - getAllStudentList Function API URL
+
 ## 0.3.4
 
 - **ADD**: Dalgeurak Service - giveWarningToStudent Function
