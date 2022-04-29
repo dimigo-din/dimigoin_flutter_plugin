@@ -16,6 +16,7 @@ dependencies:
 본 플러그인에서는 아래 리스트와 같은 패키지를 사용합니다. 개발을 진행할 떄 참고해주세요.
 1. [dio](https://pub.dev/packages/dio) (4.0.4)
 1. [flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage) (5.0.2)
+1. [socket_io_client](https://pub.dev/packages/socket_io_client) (^2.0.0-beta.4-nullsafety.0) - Socket.io 서버 버전과의 호환을 위해 플러그인은 Prerelease 버전을 사용합니다.
 
 
 ### 프로젝트 사전 작업
