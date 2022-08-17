@@ -20,6 +20,12 @@ enum MealExceptionType {
   normal
 }
 
+/// 급식 선/후밥 상태 열거형
+enum MealExceptionStatusType {
+  permitted,
+  rejected,
+}
+
 /// 현재 학생의 급식 상태 열거형
 enum MealStatusType {
   /// 입장 가능 / 정상 체크인 완료
@@ -65,6 +71,17 @@ extension MealExceptionTypeExtension on MealExceptionType {
       case MealExceptionType.first: return "first";
       case MealExceptionType.last: return "last";
       case MealExceptionType.normal: return "normal";
+      default: return "";
+    }
+  }
+}
+
+/// 급식 선/후밥 상태 열거형을 위한 Extension
+extension MealExceptionStatusTypeExtension on MealExceptionStatusType {
+  String get convertStr {
+    switch (this) {
+      case MealExceptionStatusType.permitted: return "permitted";
+      case MealExceptionStatusType.rejected: return "rejected";
       default: return "";
     }
   }
@@ -260,6 +277,33 @@ class DalgeurakService {
     }
   }
 
+  /// 선생님이 학생에게 선/후밥을 부여하는 함수입니다.
+  setTeacherMealException(MealType mealType, MealExceptionType type, String reason, String studentObjId, DateTime selectDate) async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/exception/give",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {
+          "type": type.convertStr,
+          "sid": studentObjId,
+          "reason": reason,
+          "date": DateFormat('yyyy-MM-dd').format(selectDate),
+          "time": mealType.convertEngStr
+        },
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 학생이 직접 선/후밥을 취소하는 함수입니다.
   removeUserMealException() async {
     try {
@@ -291,6 +335,51 @@ class DalgeurakService {
       return {
         "success": true,
         "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 신청 되어있는 선/후밥을 선생님이 허가/거부할 수 있는 함수입니다.
+  changeMealExceptionStatus(MealExceptionStatusType statusType, String studentObjId) async {
+    try {
+      Response response = await _dio.patch(
+        "$apiUrl/dalgeurak/exception/application",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {
+          "permission": statusType.convertStr,
+          "sid": studentObjId
+        },
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 학생이 선밥권을 사용하는 함수입니다.
+  useMealExceptionTicket(MealType mealType) async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/exception/ticket",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"time": mealType.convertEngStr},
+      );
+
+      return {
+        "success": true,
+        "content": response.data['ticket']
       };
     } on DioError catch (e) {
       return {
