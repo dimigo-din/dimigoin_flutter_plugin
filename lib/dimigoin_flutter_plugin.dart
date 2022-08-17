@@ -26,7 +26,7 @@ DalgeurakService _dalgeurakService = DalgeurakService();
 
 late String _accessToken;
 late DimigoinUser _currentUser;
-late bool _isLogin;
+bool _isLogin = false;
 StreamController<DimigoinUser?> _userChangeController = StreamController<DimigoinUser?>();
 
 StreamSocket _studentMealStatusStreamSocket = StreamSocket();
