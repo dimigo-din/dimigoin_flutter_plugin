@@ -27,7 +27,7 @@ class DimigoinMeal {
 
       Response response = await _dio.get(mealApiUrl);
 
-      return response.data['message'];
+      return response.data['meal'];
     } catch (e) {
       return {};
     }
