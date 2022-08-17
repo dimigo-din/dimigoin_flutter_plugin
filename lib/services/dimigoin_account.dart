@@ -5,6 +5,7 @@ class DimigoinAccount {
 
   DimigoinUser get currentUser => _currentUser;
   Stream<DimigoinUser?> get userChangeStream => _userChangeController.stream;
+  bool get isLogin => _isLogin;
 
   /// 디미고인 계정에 로그인을 진행하는 함수입니다.
   /// OAuth 방식을 사용하여, 로그인에 성공할 경우 반환되는 AccessToken과 RefreshToken을 Secure Storage에 저장합니다.
@@ -42,6 +43,7 @@ class DimigoinAccount {
       await _storage.delete(key: "dimigoinAccount_refreshToken");
       await _storage.delete(key: "dimigoinAccount_userInfo");
       _userChangeController.add(null);
+      _isLogin = false;
 
       return true;
     } catch (e) {
@@ -114,6 +116,7 @@ class DimigoinAccount {
       await _storage.write(key: "dimigoinAccount_userInfo", value: json.encode(infoResponse.data['identity']));
       _currentUser = DimigoinUser.fromJson(infoResponse.data['identity']);
       _userChangeController.add(_currentUser);
+      _isLogin = true;
 
       return true;
     } catch (e) {

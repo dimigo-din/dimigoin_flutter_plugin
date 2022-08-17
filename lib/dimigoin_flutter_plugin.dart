@@ -26,6 +26,7 @@ DalgeurakService _dalgeurakService = DalgeurakService();
 
 late String _accessToken;
 late DimigoinUser _currentUser;
+late bool _isLogin;
 StreamController<DimigoinUser?> _userChangeController = StreamController<DimigoinUser?>();
 
 StreamSocket _studentMealStatusStreamSocket = StreamSocket();
@@ -36,6 +37,8 @@ class DimigoinFlutterPlugin {
       _accessToken = await _dimigoinLogin.loadSavedToken();
 
       await _dimigoinLogin.fetchAccountData();
+
+      _isLogin = true;
     } else {
       _userChangeController.add(null);
     }
