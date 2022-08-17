@@ -64,6 +64,44 @@ enum StudentWarningType {
   etc
 }
 
+/// 간편식 종류 열거형
+enum ConvenienceFoodType {
+  sandwich,
+  salad,
+  misu,
+  none
+}
+
+/// 간편식 종류 열거형을 위한 Extension
+extension ConvenienceFoodTypeExtension on ConvenienceFoodType {
+  String get convertKor {
+    switch (this) {
+      case ConvenienceFoodType.sandwich: return "샌드위치";
+      case ConvenienceFoodType.salad: return "샐러드";
+      case ConvenienceFoodType.misu: return "선식";
+      default: return "";
+    }
+  }
+
+  String get convertEng {
+    switch (this) {
+      case ConvenienceFoodType.sandwich: return "sandwich";
+      case ConvenienceFoodType.salad: return "salad";
+      case ConvenienceFoodType.misu: return "misu";
+      default: return "";
+    }
+  }
+
+  String get convertDescription {
+    switch (this) {
+      case ConvenienceFoodType.sandwich: return "다양한 종류의 샌드위치가\n매일매일을 즐겁게 만들거에요";
+      case ConvenienceFoodType.salad: return "신선한 채소와 함께 취향에 맞는\n드레싱을 뿌려 먹어보세요";
+      case ConvenienceFoodType.misu: return "초콜릿, 말차, 견과류, 코코넛 등\n다양한 맛이 준비되어 있어요";
+      default: return "";
+    }
+  }
+}
+
 /// 급식 선/후밥 열거형을 위한 Extension
 extension MealExceptionTypeExtension on MealExceptionType {
   String get convertStr {
@@ -495,6 +533,67 @@ class DalgeurakService {
         "$apiUrl/dalgeurak/extra",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
         data: {"extraMinute": time},
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 간편식의 정보를 가져오는 함수입니다.
+  getConvenienceFoodInfo() async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/convenience",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      return {
+        "success": true,
+        "content": response.data['convenience']
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 학생이 간편식을 신청하는 함수입니다.
+  applicationConvenienceFood(MealType mealType, ConvenienceFoodType foodType) async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/convenience",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"time": mealType.convertEngStr, "food": foodType.convertEng},
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 학생이 간편식을 먹을 때 체크인을 진행하는 함수입니다.
+  checkInConvenienceFood() async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/convenience/checkin",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
       );
 
       return {
