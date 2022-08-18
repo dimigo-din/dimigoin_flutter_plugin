@@ -1,3 +1,17 @@
+## 0.4.2
+
+- **FIX**: Dimigoin Account isLogin Variable - Late Init Error
+
+## 0.4.1
+
+- **FEAT**: Dimigoin Account - isLogin Variable
+
+## 0.4.0
+
+- **FEAT**: Dalgeurak Service - setTeacherMealException, changeMealExceptionStatus, useMealExceptionTicket Function & MealExceptionStatusType Enum
+- **FEAT**: Dalgeurak Service - getConvenienceFoodInfo, applicationConvenienceFood, checkInConvenienceFood Function & ConvenienceFoodType Enum
+- **FIX**: Dalgeurak Service getDailyMeal Function - Response Error
+
 ## 0.3.6
 
 - **MODIFY**: Dalgeurak Service - mealCheckInByManager, authorizeDienenPermission, removeDienenPermission, mandateDienenLeaderPermission Function Parameter
