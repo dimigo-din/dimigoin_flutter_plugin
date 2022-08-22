@@ -1,3 +1,7 @@
+## 0.4.3
+
+- **FEAT**: Dalgeurak Service - getMyWarningList, getStudentWarningList Function, DalgeurakWarning Model
+
 ## 0.4.2
 
 - **FIX**: Dimigoin Account isLogin Variable - Late Init Error

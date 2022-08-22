@@ -271,6 +271,52 @@ class DalgeurakService {
     }
   }
 
+  getMyWarningList() async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/warning",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      List originalData = response.data['warning'];
+      List formattingData = [];
+      originalData.forEach((element) => formattingData.add(DalgeurakWarning.fromJson(element)));
+
+      return {
+        "success": true,
+        "content": formattingData,
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  getStudentWarningList(String studentObjId) async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/warning/$studentObjId",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      List originalData = response.data['warning'];
+      List formattingData = [];
+      originalData.forEach((element) => formattingData.add(DalgeurakWarning.fromJson(element)));
+
+      return {
+        "success": true,
+        "content": formattingData,
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 학생의 현재 입장 여부, 선/후밥 여부를 확인하는 함수입니다.
   getUserMealInfo() async {
     try {
