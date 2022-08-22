@@ -1,3 +1,7 @@
+## 0.4.4
+
+- **FEAT**: StudentWarningType Enum - convertKorStr Extension
+
 ## 0.4.3
 
 - **FEAT**: Dalgeurak Service - getMyWarningList, getStudentWarningList Function, DalgeurakWarning Model

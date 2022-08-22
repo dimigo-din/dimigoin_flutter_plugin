@@ -41,7 +41,7 @@ class DalgeurakWarning {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['_id'] = _id;
-    map['type'] = _warningTypeList?.map((v) => v.convertStr).cast<String>().toList();
+    map['type'] = _warningTypeList?.map((v) => v.convertEngStr).cast<String>().toList();
     map['reason'] = _reason;
     map['student'] = _studentObjId;
     map['date'] = date.toString();

@@ -150,13 +150,24 @@ extension MealTypeExtension on MealType {
 
 /// 학생의 경고 유형 열거형을 위한 Extension
 extension StudentWarningTypeExtension on StudentWarningType {
-  String get convertStr {
+  String get convertEngStr {
     switch (this) {
       case StudentWarningType.tardy: return "tardy";
       case StudentWarningType.abuse: return "abuse";
       case StudentWarningType.useHallway: return "useHallway";
       case StudentWarningType.ignoreSequence: return "ignoreSequence";
       case StudentWarningType.etc: return "etc";
+      default: return "";
+    }
+  }
+
+  String get convertKorStr {
+    switch (this) {
+      case StudentWarningType.tardy: return "지각";
+      case StudentWarningType.abuse: return "욕설";
+      case StudentWarningType.useHallway: return "통로 사용";
+      case StudentWarningType.ignoreSequence: return "순서 무시";
+      case StudentWarningType.etc: return "기타";
       default: return "";
     }
   }
@@ -251,7 +262,7 @@ class DalgeurakService {
   /// 디넌이 학생에게 경고를 부여하는 함수입니다.
   giveWarningToStudent(String studentObjId, List warningType, String reason) async {
     try {
-      warningType.forEach((element) => warningType[warningType.indexOf(element)] = (element as StudentWarningType).convertStr);
+      warningType.forEach((element) => warningType[warningType.indexOf(element)] = (element as StudentWarningType).convertEngStr);
 
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/warning",
