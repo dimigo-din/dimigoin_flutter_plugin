@@ -78,6 +78,14 @@ enum ConvenienceFoodType {
   none
 }
 
+/// 급식 대기 장소 종류 열거형
+enum MealWaitingPlaceType {
+  /// 1학년 복도
+  corridor,
+  /// 외부 통로
+  outside,
+}
+
 /// 간편식 종류 열거형을 위한 Extension
 extension ConvenienceFoodTypeExtension on ConvenienceFoodType {
   String get convertKor {
@@ -213,6 +221,25 @@ extension DalgeurakMealTypeExtension on String {
       case "ignoreSequence": return StudentWarningType.ignoreSequence;
       case "etc": return StudentWarningType.etc;
       default: return StudentWarningType.etc;
+    }
+  }
+}
+
+/// 급식 대기 장소 종류 열거형을 위한 Extension
+extension MealWaitingPlaceTypeExtension on MealWaitingPlaceType {
+  String get convertKor {
+    switch (this) {
+      case MealWaitingPlaceType.corridor: return "1학년 복도";
+      case MealWaitingPlaceType.outside: return "외부 통로";
+      default: return "";
+    }
+  }
+
+  String get convertEng {
+    switch (this) {
+      case MealWaitingPlaceType.corridor: return "corridor";
+      case MealWaitingPlaceType.outside: return "outside";
+      default: return "";
     }
   }
 }
@@ -596,6 +623,27 @@ class DalgeurakService {
         "$apiUrl/dalgeurak/extra",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
         data: {"extraMinute": time},
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 급식 대기 장소를 설정하는 함수입니다.
+  setMealWaitingPlace(MealWaitingPlaceType placeType) async {
+    try {
+      Response response = await _dio.put(
+        "$apiUrl/dalgeurak/waitingLine",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"position": placeType.convertEng},
       );
 
       return {

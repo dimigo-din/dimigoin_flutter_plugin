@@ -1,3 +1,7 @@
+## 0.4.6
+
+- **FEAT**: Dalgeurak Service - MealWaitingPlaceType Enum, setMealWaitingPlace Function
+
 ## 0.4.5
 
 - **FEAT**: MealType Enum - None Type
