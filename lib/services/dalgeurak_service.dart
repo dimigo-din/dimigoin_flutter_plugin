@@ -68,9 +68,13 @@ enum StudentWarningType {
 
 /// 간편식 종류 열거형
 enum ConvenienceFoodType {
+  /// 샌드위치
   sandwich,
+  /// 샐러드
   salad,
+  /// 선식
   misu,
+  /// 그 외 간편식 종류
   none
 }
 
