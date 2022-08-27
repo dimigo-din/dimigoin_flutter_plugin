@@ -7,7 +7,9 @@ enum MealType {
   /// 급식 점심시간
   lunch,
   /// 급식 저녁시간
-  dinner
+  dinner,
+  /// 그 외 시간 타입
+  none,
 }
 
 /// 급식 선/후밥 열거형

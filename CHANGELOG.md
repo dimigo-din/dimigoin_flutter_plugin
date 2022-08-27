@@ -1,3 +1,7 @@
+## 0.4.5
+
+- **FEAT**: MealType Enum - None Type
+
 ## 0.4.4
 
 - **FEAT**: StudentWarningType Enum - convertKorStr Extension
