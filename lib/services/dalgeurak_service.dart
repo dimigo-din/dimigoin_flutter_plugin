@@ -247,6 +247,7 @@ extension MealWaitingPlaceTypeExtension on MealWaitingPlaceType {
 
 /// 달그락 서비스 API 클래스
 class DalgeurakService {
+  DateTime nowTime = DateTime.now();
 
   Stream<dynamic>? get studentMealStatusStream => _studentMealStatusStreamSocket.getResponse;
 
@@ -923,5 +924,23 @@ class DalgeurakService {
     }
 
     return mealKind;
+  }
+
+  /// 정보를 불러오기 위해 날짜를 계산하는 과정에서 날짜 숫자 전처리를 진행해주는 함수입니다.
+  Map getCorrectDate(int nowDay) {
+    Map result = {};
+
+    if (nowDay < 1) {
+      result["day"] = DateTime(nowTime.year, nowTime.month, 0).day - nowDay.abs();
+      result["month"] = (nowTime.month-1 < 1) ? 12 : nowTime.month-1;
+    } else if (nowDay > DateTime(nowTime.year, nowTime.month+1, 0).day) {
+      result["day"] = nowDay - DateTime(nowTime.year, nowTime.month+1, 0).day;
+      result["month"] = (nowTime.month+1 > 12) ? 1 : nowTime.month+1;
+    } else {
+      result["day"] = nowDay;
+      result["month"] = nowTime.month;
+    }
+
+    return result;
   }
 }

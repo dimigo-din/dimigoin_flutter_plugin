@@ -1,3 +1,7 @@
+## 0.4.7
+
+- **FEAT**: Dalgeurak Service - getCorrectDate Function
+
 ## 0.4.6
 
 - **FEAT**: Dalgeurak Service - MealWaitingPlaceType Enum, setMealWaitingPlace Function
