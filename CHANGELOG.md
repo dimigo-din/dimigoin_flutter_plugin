@@ -1,3 +1,7 @@
+## 0.4.8
+
+- **FEAT**: DimigoinUser - Teacher Role
+
 ## 0.4.7
 
 - **FEAT**: Dalgeurak Service - getCorrectDate Function
