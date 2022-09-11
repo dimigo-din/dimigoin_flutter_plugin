@@ -86,6 +86,20 @@ enum MealWaitingPlaceType {
   outside,
 }
 
+/// 급식 취소 신청 상태 열거형
+enum MealCancelStatusType {
+  /// 1차 승인(담임선생님) 대기 중
+  teacherWaiting,
+  /// 2차 승인(급식실) 대기 중
+  aramarkWaiting,
+  /// 최종 승인됨
+  approve,
+  /// 신청 거부됨
+  reject,
+  /// 기타
+  etc
+}
+
 /// 간편식 종류 열거형을 위한 Extension
 extension ConvenienceFoodTypeExtension on ConvenienceFoodType {
   String get convertKor {
@@ -187,8 +201,49 @@ extension StudentWarningTypeExtension on StudentWarningType {
   }
 }
 
+/// 급식 대기 장소 종류 열거형을 위한 Extension
+extension MealWaitingPlaceTypeExtension on MealWaitingPlaceType {
+  String get convertKor {
+    switch (this) {
+      case MealWaitingPlaceType.corridor: return "1학년 복도";
+      case MealWaitingPlaceType.outside: return "외부 통로";
+      default: return "";
+    }
+  }
+
+  String get convertEng {
+    switch (this) {
+      case MealWaitingPlaceType.corridor: return "corridor";
+      case MealWaitingPlaceType.outside: return "outside";
+      default: return "";
+    }
+  }
+}
+
+/// 급식 대기 장소 종류 열거형을 위한 Extension
+extension MealCancelStatusTypeExtension on MealCancelStatusType {
+  String get convertEng {
+    switch (this) {
+      case MealCancelStatusType.teacherWaiting: return "teacherWaiting";
+      case MealCancelStatusType.aramarkWaiting: return "aramarkWaiting";
+      case MealCancelStatusType.approve: return "approve";
+      case MealCancelStatusType.reject: return "reject";
+      default: return "";
+    }
+  }
+}
+
 /// 달그락 서비스의 급식과 관련된 열거형을 위한 Extension
 extension DalgeurakMealTypeExtension on String {
+  MealType get convertMealType {
+    switch (this) {
+      case "breakfast": return MealType.breakfast;
+      case "lunch": return MealType.lunch;
+      case "dinner": return MealType.dinner;
+      default: return MealType.none;
+    }
+  }
+
   MealStatusType get convertMealStatusType {
     switch (this) {
       case "onTime": return MealStatusType.onTime;
@@ -223,23 +278,14 @@ extension DalgeurakMealTypeExtension on String {
       default: return StudentWarningType.etc;
     }
   }
-}
 
-/// 급식 대기 장소 종류 열거형을 위한 Extension
-extension MealWaitingPlaceTypeExtension on MealWaitingPlaceType {
-  String get convertKor {
+  MealCancelStatusType get convertMealCancelStatusType {
     switch (this) {
-      case MealWaitingPlaceType.corridor: return "1학년 복도";
-      case MealWaitingPlaceType.outside: return "외부 통로";
-      default: return "";
-    }
-  }
-
-  String get convertEng {
-    switch (this) {
-      case MealWaitingPlaceType.corridor: return "corridor";
-      case MealWaitingPlaceType.outside: return "outside";
-      default: return "";
+      case "teacherWaiting": return MealCancelStatusType.teacherWaiting;
+      case "aramarkWaiting": return MealCancelStatusType.aramarkWaiting;
+      case "approve": return MealCancelStatusType.approve;
+      case "reject": return MealCancelStatusType.reject;
+      default: return MealCancelStatusType.etc;
     }
   }
 }
@@ -757,6 +803,83 @@ class DalgeurakService {
       return {
         "success": false,
         "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 학생이 직접 급식 취소를 신청하는 함수입니다.
+  applicationUserMealCancel(String reason, DateTime startDate, DateTime endDate, List<MealType> mealTypeList) async {
+    try {
+      List<String> mealTypeStrList = [];
+      mealTypeList.forEach((element) => mealTypeStrList.add(element.convertEngStr));
+
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/cancel",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {
+          "reason": reason,
+          "startDate": DateFormat('yyyy-MM-dd').format(startDate),
+          "endDate": DateFormat('yyyy-MM-dd').format(endDate),
+          "time": mealTypeStrList,
+        }
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["data"]
+      };
+    }
+  }
+
+  /// 급식 취소 신청을 승인/거절하는 함수입니다.
+  changeMealCancelStatus(String mealCancelObjId, bool isApprove) async {
+    try {
+      Response response = await _dio.patch(
+          "$apiUrl/dalgeurak/cancel",
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          data: {
+            "id": mealCancelObjId,
+            "approve": isApprove,
+          }
+      );
+
+      return {
+        "success": true,
+        "content": response.data["data"]
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["data"]
+      };
+    }
+  }
+
+  /// 급식 취소 신청 목록을 불러오는 함수입니다. 선생님은 자신 반 학생들 내역만, 급식실은 1차 승인이 진행된 내역만 보여줍니다.
+  getMealCancelApplicationList() async {
+    try {
+      Response response = await _dio.get(
+          "$apiUrl/dalgeurak/cancel",
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      List originalData = response.data['students'];
+      List formattingData = [];
+      originalData.forEach((element) => formattingData.add(DalgeurakMealCancel.fromJson(element)));
+
+      return {
+        "success": true,
+        "content": formattingData,
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["data"]
       };
     }
   }
