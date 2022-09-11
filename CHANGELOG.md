@@ -1,3 +1,11 @@
+## 0.4.9
+
+- **FEAT**: Dalgeurak Service - setStayMealPrice, getStayMealPrice Function
+- **FEAT**: Dalgeurak Service - applicationUserMealCancel, changeMealCancelStatus, getMealCancelApplicationList Function
+- **FEAT**: Dalgeurak Service - DalgeurakMealCancel Enum
+- **FIX** - Dalgeurak Service - getAllUserMealException Function Parameter Error
+- **FIX** - Plugin Example App - Keyboard Overflow Error
+
 ## 0.4.8
 
 - **FEAT**: DimigoinUser - Teacher Role

@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(widget.title),
       ),
