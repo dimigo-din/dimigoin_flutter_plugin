@@ -720,6 +720,47 @@ class DalgeurakService {
     }
   }
 
+  /// 급식실에서 잔류 급식비 단가를 변경하는 함수입니다.
+  setStayMealPrice(int price) async {
+    try {
+      Response response = await _dio.patch(
+        "$apiUrl/dalgeurak/stayMeal",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"price": price}
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 지정된 잔류 급식비 단가를 가져오는 함수입니다.
+  getStayMealPrice() async {
+    try {
+      Response response = await _dio.get(
+          "$apiUrl/dalgeurak/stayMeal",
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 학생에게 디넌 권한을 부여하는 함수입니다.
   authorizeDienenPermission(String studentObjId) async {
     try {
