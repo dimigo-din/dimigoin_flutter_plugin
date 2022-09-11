@@ -454,10 +454,10 @@ class DalgeurakService {
   }
 
   /// 선/후밥을 신청한 모든 학생들의 리스트를 가져오는 함수입니다.
-  getAllUserMealException(MealExceptionType type) async {
+  getAllUserMealException() async {
     try {
       Response response = await _dio.get(
-        "$apiUrl/dalgeurak/exception/${type.convertStr}",
+        "$apiUrl/dalgeurak/exception/",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
       );
 
