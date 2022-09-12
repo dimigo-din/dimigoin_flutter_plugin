@@ -770,7 +770,7 @@ class DalgeurakService {
   setStayMealPrice(int price) async {
     try {
       Response response = await _dio.patch(
-        "$apiUrl/dalgeurak/stayMeal",
+        "$apiUrl/dalgeurak/stayMealPrice",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
         data: {"price": price}
       );
@@ -791,7 +791,7 @@ class DalgeurakService {
   getStayMealPrice() async {
     try {
       Response response = await _dio.get(
-          "$apiUrl/dalgeurak/stayMeal",
+          "$apiUrl/dalgeurak/stayMealPrice",
           options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
       );
 
@@ -831,7 +831,7 @@ class DalgeurakService {
     } on DioError catch (e) {
       return {
         "success": false,
-        "content": e.response?.data["data"]
+        "content": e.response?.data["message"]
       };
     }
   }
@@ -855,7 +855,7 @@ class DalgeurakService {
     } on DioError catch (e) {
       return {
         "success": false,
-        "content": e.response?.data["data"]
+        "content": e.response?.data["message"]
       };
     }
   }
@@ -879,7 +879,7 @@ class DalgeurakService {
     } on DioError catch (e) {
       return {
         "success": false,
-        "content": e.response?.data["data"]
+        "content": e.response?.data["message"]
       };
     }
   }
