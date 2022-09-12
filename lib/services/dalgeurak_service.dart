@@ -836,6 +836,40 @@ class DalgeurakService {
     }
   }
 
+  /// 선생님이 학생들의 급식 취소를 신청하는 함수입니다.
+  applicationTeacherMealCancel(List<DimigoinUser> studentList, String reason, DateTime startDate, DateTime endDate, List<MealType> mealTypeList) async {
+    try {
+      List<String> mealTypeStrList = [];
+      mealTypeList.forEach((element) => mealTypeStrList.add(element.convertEngStr));
+
+      List<String> studentObjIdList = [];
+      studentList.forEach((element) => studentObjIdList.add(element.id!));
+
+      Response response = await _dio.post(
+          "$apiUrl/dalgeurak/cancel/students",
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          data: {
+            "id": studentObjIdList,
+            "reason": reason,
+            "startDate": DateFormat('yyyy-MM-dd').format(startDate),
+            "endDate": DateFormat('yyyy-MM-dd').format(endDate),
+            "time": mealTypeStrList,
+          }
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      print(e.response?.data);
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 급식 취소 신청을 승인/거절하는 함수입니다.
   changeMealCancelStatus(String mealCancelObjId, bool isApprove) async {
     try {
