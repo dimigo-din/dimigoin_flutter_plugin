@@ -13,6 +13,7 @@ part 'services/dalgeurak_service.dart';
 part 'models/dimigoin_user.dart';
 part 'models/dalgeurak_warning.dart';
 part 'models/dalgeurak_mealcancel.dart';
+part 'models/dalgeurak_mealexception.dart';
 part 'models/stream_socket.dart';
 
 

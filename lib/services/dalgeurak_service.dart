@@ -24,8 +24,8 @@ enum MealExceptionType {
 
 /// 급식 선/후밥 상태 열거형
 enum MealExceptionStatusType {
-  permitted,
-  rejected,
+  approve,
+  reject,
 }
 
 /// 현재 학생의 급식 상태 열거형
@@ -146,8 +146,8 @@ extension MealExceptionTypeExtension on MealExceptionType {
 extension MealExceptionStatusTypeExtension on MealExceptionStatusType {
   String get convertStr {
     switch (this) {
-      case MealExceptionStatusType.permitted: return "permitted";
-      case MealExceptionStatusType.rejected: return "rejected";
+      case MealExceptionStatusType.approve: return "approve";
+      case MealExceptionStatusType.reject: return "reject";
       default: return "";
     }
   }
@@ -432,17 +432,23 @@ class DalgeurakService {
   }
 
   /// 학생이 직접 선/후밥을 신청하는 함수입니다.
-  setUserMealException(MealExceptionType type, String reason) async {
+  setUserMealException(MealExceptionType type, String reason, List<String> studentObjIdList, MealType mealType, String weekDay) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/${type.convertStr}",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"reason": reason},
+        data: {
+          "reason": reason,
+          "group": studentObjIdList.isNotEmpty,
+          "appliers": studentObjIdList,
+          "time": mealType.convertEngStr,
+          "date": weekDay,
+        },
       );
 
       return {
         "success": true,
-        "content": response.data
+        "content": response.data['date']
       };
     } on DioError catch (e) {
       return {
@@ -489,7 +495,7 @@ class DalgeurakService {
 
       return {
         "success": true,
-        "content": response.data
+        "content": response.data['exception']
       };
     } on DioError catch (e) {
       return {
@@ -507,9 +513,13 @@ class DalgeurakService {
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
       );
 
+      List originalData = response.data['users'];
+      List formattingData = [];
+      originalData.forEach((element) => formattingData.add(DalgeurakMealException.fromJson(element)));
+
       return {
         "success": true,
-        "content": response.data
+        "content": formattingData,
       };
     } on DioError catch (e) {
       return {
@@ -520,14 +530,15 @@ class DalgeurakService {
   }
 
   /// 신청 되어있는 선/후밥을 선생님이 허가/거부할 수 있는 함수입니다.
-  changeMealExceptionStatus(MealExceptionStatusType statusType, String studentObjId) async {
+  changeMealExceptionStatus(MealExceptionStatusType statusType, String exceptionModelId, String reason) async {
     try {
       Response response = await _dio.patch(
         "$apiUrl/dalgeurak/exception/application",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
         data: {
           "permission": statusType.convertStr,
-          "sid": studentObjId
+          "id": exceptionModelId,
+          "reason": reason,
         },
       );
 

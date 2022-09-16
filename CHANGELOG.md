@@ -1,3 +1,8 @@
+## 0.4.11
+
+- **REFACTOR**: Dalgeurak Service - setUserMealException, getAllUserMealException, changeMealExceptionStatus Function
+- **FEAT**: Dalgeurak Service - DalgeurakMealException Enum
+
 ## 0.4.10
 
 - **FEAT**: Dalgeurak Service - applicationTeacherMealCancel Function
