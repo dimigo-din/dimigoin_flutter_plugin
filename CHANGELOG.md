@@ -1,3 +1,7 @@
+## 0.4.12
+
+- **FEAT**: Dalgeurak Service - enterStudentMealException, getRemainLastMealExceptionStudentAmount, getSimpleStudentInfo Function
+
 ## 0.4.11
 
 - **REFACTOR**: Dalgeurak Service - setUserMealException, getAllUserMealException, changeMealExceptionStatus Function

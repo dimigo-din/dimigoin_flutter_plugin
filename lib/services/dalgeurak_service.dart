@@ -618,6 +618,30 @@ class DalgeurakService {
     }
   }
 
+  /// 달그락 선생님 화면에 사용할 수 있는 간단한 학생의 정보를 불러올 수 있는 함수입니다.
+  getSimpleStudentInfo(String studentObjId) async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/user",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        queryParameters: {
+          "student": studentObjId
+        }
+      );
+      print(response.data);
+
+      return {
+        "success": true,
+        "content": DimigoinUser.fromJson(response.data['user']),
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 모든 학년의 급식 반 순서를 가져오는 함수입니다.
   getMealSequence() async {
     try {
