@@ -554,6 +554,49 @@ class DalgeurakService {
     }
   }
 
+  /// 급식실에 선밥 학생이 들어올 경우 선생님/디넌이 입장 처리를 진행하는 함수입니다.
+  enterStudentMealException(String studentObjId) async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/exception/enter",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {
+          "sid": studentObjId,
+        },
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 현재 후밥 신청이 가능한 학생 수를 반환하는 함수입니다.
+  getRemainLastMealExceptionStudentAmount(String weekDay, MealType mealType) async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/exception/$weekDay/$mealType",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      return {
+        "success": true,
+        "content": response.data['remain']
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 학생이 선밥권을 사용하는 함수입니다.
   useMealExceptionTicket(MealType mealType) async {
     try {
