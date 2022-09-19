@@ -628,7 +628,6 @@ class DalgeurakService {
           "student": studentObjId
         }
       );
-      print(response.data);
 
       return {
         "success": true,
