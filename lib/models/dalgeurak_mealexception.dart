@@ -12,6 +12,7 @@ class DalgeurakMealException {
   String? _reason;
   MealExceptionType? _exceptionType;
   String? _rejectReason;
+  bool? _isEnter;
 
 
   String? get id => _id;
@@ -23,6 +24,7 @@ class DalgeurakMealException {
   String? get reason => _reason;
   MealExceptionType? get exceptionType => _exceptionType;
   String? get rejectReason => _rejectReason;
+  bool? get isEnter => _isEnter;
 
 
   DalgeurakMealException({
@@ -34,7 +36,8 @@ class DalgeurakMealException {
     required DateTime? date,
     required String? reason,
     required MealExceptionType? exceptionType,
-    required String? rejectReason,}){
+    required String? rejectReason,
+    required bool? isEnter}){
     _id = id;
     _isGroup = isGroup;
     _applierUser = applierUser;
@@ -44,18 +47,20 @@ class DalgeurakMealException {
     _reason = reason;
     _exceptionType = exceptionType;
     _rejectReason = rejectReason;
+    _isEnter = isEnter;
 }
 
   DalgeurakMealException.fromJson(dynamic json) {
     _id = json['_id'];
     _isGroup = json['group'];
     _applierUser = DimigoinUser.fromJson(json['applier']);
-    _groupApplierUserList = (json['appliers'] as List).map((e) => DimigoinUser.fromJson(e)).cast<DimigoinUser>().toList();
+    _groupApplierUserList = (json['appliers'] as List).cast<DimigoinUser>();
     _mealType = (json['time'] as String).convertMealType;
     _date = DateTime.parse(json['date']);
     _reason = json['reason'];
     _exceptionType = (json['exceptionType'] as String).convertMealExceptionType;
     _rejectReason = json['rejectReason'];
+    _isEnter = json['entered'];
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +74,7 @@ class DalgeurakMealException {
     map['reason'] = _reason;
     map['exceptionType'] = _exceptionType?.convertStr;
     map['rejectReason'] = _rejectReason;
+    map['entered'] = _isEnter;
     return map;
   }
 

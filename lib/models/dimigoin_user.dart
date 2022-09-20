@@ -98,6 +98,7 @@ class DimigoinUser {
   List<DimigoinPermissionType>? _permissions;
   String? _birthdate;
   String? _libraryId;
+  bool? _isExceptionEnter;
 
   String? get id => _id;
   int? get idx => _idx;
@@ -117,6 +118,7 @@ class DimigoinUser {
   List<DimigoinPermissionType>? get permissions => _permissions;
   String? get birthdate => _birthdate;
   String? get libraryId => _libraryId;
+  bool? get isExceptionEtner => _isExceptionEnter;
 
 
   DimigoinUser({
@@ -137,7 +139,8 @@ class DimigoinUser {
     required List<dynamic> photos,
     required List<DimigoinPermissionType> permissions,
     required String birthdate,
-    required String libraryId,}){
+    required String libraryId,
+    required bool isExceptionEnter}){
     _id = id;
     _idx = idx;
     _userId = userId;
@@ -156,6 +159,7 @@ class DimigoinUser {
     _permissions = permissions;
     _birthdate = birthdate;
     _libraryId = libraryId;
+    _isExceptionEnter = isExceptionEnter;
 }
 
   DimigoinUser.fromJson(dynamic json) {
@@ -187,6 +191,7 @@ class DimigoinUser {
     }
     _birthdate = json['birthdate'];
     _libraryId = json['libraryId'];
+    _isExceptionEnter = json['entered'];
   }
 
   Map<String, dynamic> toJson() {
@@ -213,6 +218,7 @@ class DimigoinUser {
     }
     map['birthdate'] = _birthdate;
     map['libraryId'] = _libraryId;
+    map['entered'] = _isExceptionEnter;
     return map;
   }
 

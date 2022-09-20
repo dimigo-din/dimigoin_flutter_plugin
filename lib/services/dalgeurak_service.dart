@@ -506,7 +506,7 @@ class DalgeurakService {
   }
 
   /// 선/후밥을 신청한 모든 학생들의 리스트를 가져오는 함수입니다.
-  getAllUserMealException() async {
+  getAllUserMealException(bool isGetGroupAppliersStudentInfo) async {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/exception/",
@@ -514,12 +514,29 @@ class DalgeurakService {
       );
 
       List originalData = response.data['users'];
-      List formattingData = [];
-      originalData.forEach((element) => formattingData.add(DalgeurakMealException.fromJson(element)));
+      List formattingDataList = [];
+      for (var element in originalData) {
+        Map preprocessingData = json.decode(json.encode(element));
+        List originalAppliersList = (element['appliers'] as List);
+        List<DimigoinUser> preprocessingStudentList = [].cast<DimigoinUser>();
+
+        for (var element2 in (originalAppliersList)) {
+          if (isGetGroupAppliersStudentInfo) {
+            preprocessingStudentList.add((await getSimpleStudentInfo(element2['student'], isExceptionEnter: element2['entered']))['content']);
+          } else {
+            preprocessingStudentList.add(DimigoinUser.fromJson({"_id": element2['student'], "entered": element2['entered']}));
+          }
+        }
+
+        preprocessingData['appliers'] = preprocessingStudentList;
+
+        formattingDataList.add(DalgeurakMealException.fromJson(preprocessingData));
+      }
+
 
       return {
         "success": true,
-        "content": formattingData,
+        "content": formattingDataList,
       };
     } on DioError catch (e) {
       return {
@@ -619,7 +636,7 @@ class DalgeurakService {
   }
 
   /// 달그락 선생님 화면에 사용할 수 있는 간단한 학생의 정보를 불러올 수 있는 함수입니다.
-  getSimpleStudentInfo(String studentObjId) async {
+  getSimpleStudentInfo(String studentObjId, {bool? isExceptionEnter}) async {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/user",
@@ -629,9 +646,12 @@ class DalgeurakService {
         }
       );
 
+      Map rawData = response.data['user'];
+      if (isExceptionEnter != null) { rawData['entered'] = isExceptionEnter; }
+
       return {
         "success": true,
-        "content": DimigoinUser.fromJson(response.data['user']),
+        "content": DimigoinUser.fromJson(rawData),
       };
     } on DioError catch (e) {
       return {
