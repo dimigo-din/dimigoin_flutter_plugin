@@ -1,3 +1,7 @@
+## 0.4.14
+
+- **FEAT**: Dalgeurak Service - MealExceptionStatusType
+
 ## 0.4.13
 
 - **FIX**: Dalgeurak Service - Student Meal Exception Group Appliers Student Info Empty Bug

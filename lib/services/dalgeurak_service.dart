@@ -26,6 +26,8 @@ enum MealExceptionType {
 enum MealExceptionStatusType {
   approve,
   reject,
+  waiting,
+  etc
 }
 
 /// 현재 학생의 급식 상태 열거형
@@ -148,6 +150,7 @@ extension MealExceptionStatusTypeExtension on MealExceptionStatusType {
     switch (this) {
       case MealExceptionStatusType.approve: return "approve";
       case MealExceptionStatusType.reject: return "reject";
+      case MealExceptionStatusType.waiting: return "waiting";
       default: return "";
     }
   }
@@ -286,6 +289,15 @@ extension DalgeurakMealTypeExtension on String {
       case "approve": return MealCancelStatusType.approve;
       case "reject": return MealCancelStatusType.reject;
       default: return MealCancelStatusType.etc;
+    }
+  }
+
+  MealExceptionStatusType get convertMealExceptionStatusType {
+    switch (this) {
+      case "approve": return MealExceptionStatusType.approve;
+      case "reject": return MealExceptionStatusType.reject;
+      case "waiting": return MealExceptionStatusType.waiting;
+      default: return MealExceptionStatusType.etc;
     }
   }
 }
