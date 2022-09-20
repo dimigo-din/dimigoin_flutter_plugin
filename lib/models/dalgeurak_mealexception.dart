@@ -80,7 +80,7 @@ class DalgeurakMealException {
     map['exceptionType'] = _exceptionType?.convertStr;
     map['rejectReason'] = _rejectReason;
     map['entered'] = _isEnter;
-    map['applicationStatus'] = _statusType;
+    map['applicationStatus'] = (_statusType as MealExceptionStatusType).convertStr;
     return map;
   }
 

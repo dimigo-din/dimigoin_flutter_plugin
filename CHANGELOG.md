@@ -1,3 +1,7 @@
+## 0.4.15
+
+- **FIX**: Dalgeurak Service - MealExceptionStatusType Enum Type Cast Bug
+
 ## 0.4.14
 
 - **FEAT**: Dalgeurak Service - MealExceptionStatusType
