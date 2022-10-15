@@ -22,6 +22,7 @@ final _storage = const FlutterSecureStorage();
 
 const apiUrl = "https://api.dimigo.in";
 const socketApiUrl = "http://oci.dimigo.in:4999";
+const dimigoStudentApiUrl = "https://api.dimigo.hs.kr/v1";
 
 
 DimigoinAccount _dimigoinLogin = DimigoinAccount();
