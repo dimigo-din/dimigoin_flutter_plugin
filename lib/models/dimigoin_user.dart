@@ -80,8 +80,7 @@ extension DimigoinAccountTypeExtension on String {
 
 /// 디미고인 유저 정보 클래스
 class DimigoinUser {
-  String? _id;
-  int? _idx;
+  int? _id;
   String? _userId;
   String? _name;
   DimigoinUserType? _userType;
@@ -100,8 +99,7 @@ class DimigoinUser {
   String? _libraryId;
   bool? _isExceptionEnter;
 
-  String? get id => _id;
-  int? get idx => _idx;
+  int? get id => _id;
   String? get userId => _userId;
   String? get name => _name;
   DimigoinUserType? get userType => _userType;
@@ -122,8 +120,7 @@ class DimigoinUser {
 
 
   DimigoinUser({
-    required String id,
-    required int idx,
+    required int id,
     required String userId,
     required String name,
     required DimigoinUserType userType,
@@ -142,7 +139,6 @@ class DimigoinUser {
     required String libraryId,
     required bool isExceptionEnter}){
     _id = id;
-    _idx = idx;
     _userId = userId;
     _name = name;
     _userType = userType;
@@ -163,8 +159,7 @@ class DimigoinUser {
 }
 
   DimigoinUser.fromJson(dynamic json) {
-    _id = json['_id'];
-    _idx = json['idx'];
+    _id = json['user_id'];
     _userId = json['username'];
     _name = json['name'];
     _userType = json['userType'].toString().convertDimigoinUserType;
@@ -176,7 +171,7 @@ class DimigoinUser {
     _classNum = json['class'];
     _gradeNum = json['grade'];
     _studentNum = json['number'];
-    _studentId = json['serial'];
+    _studentId = int.parse(json['serial']);
     if (json['photos'] != null) {
       _photos = [];
       json['photos'].forEach((v) {
@@ -196,8 +191,7 @@ class DimigoinUser {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['_id'] = _id;
-    map['idx'] = _idx;
+    map['user_id'] = _id;
     map['username'] = _userId;
     map['name'] = _name;
     map['userType'] = _userType?.convertStr;
@@ -209,7 +203,7 @@ class DimigoinUser {
     map['class'] = _classNum;
     map['grade'] = _gradeNum;
     map['number'] = _studentNum;
-    map['serial'] = _studentId;
+    map['serial'] = _studentId.toString();
     if (_photos != null) {
       map['photos'] = _photos?.toList();
     }

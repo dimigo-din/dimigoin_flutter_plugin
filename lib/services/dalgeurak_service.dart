@@ -331,12 +331,12 @@ class DalgeurakService {
   }
 
   /// 디넌이 수동으로 학생의 체크인을 진행하는 함수입니다.
-  mealCheckInByManager(String studentObjId) async {
+  mealCheckInByManager(String studentUid) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/entrance",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"sid": studentObjId},
+        data: {"sid": studentUid},
       );
 
       return {
@@ -352,14 +352,14 @@ class DalgeurakService {
   }
 
   /// 디넌이 학생에게 경고를 부여하는 함수입니다.
-  giveWarningToStudent(String studentObjId, List warningType, String reason) async {
+  giveWarningToStudent(String studentUid, List warningType, String reason) async {
     try {
       warningType.forEach((element) => warningType[warningType.indexOf(element)] = (element as StudentWarningType).convertEngStr);
 
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/warning",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"sid": studentObjId, "type": warningType, "reason": reason},
+        data: {"sid": studentUid, "type": warningType, "reason": reason},
       );
 
       return {
@@ -397,10 +397,10 @@ class DalgeurakService {
     }
   }
 
-  getStudentWarningList(String studentObjId) async {
+  getStudentWarningList(String studentUid) async {
     try {
       Response response = await _dio.get(
-        "$apiUrl/dalgeurak/warning/$studentObjId",
+        "$apiUrl/dalgeurak/warning/$studentUid",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
       );
 
@@ -444,15 +444,15 @@ class DalgeurakService {
   }
 
   /// 학생이 직접 선/후밥을 신청하는 함수입니다.
-  setUserMealException(MealExceptionType type, String reason, List<String> studentObjIdList, MealType mealType, String weekDay) async {
+  setUserMealException(MealExceptionType type, String reason, List<String> studentUidList, MealType mealType, String weekDay) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/${type.convertStr}",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
         data: {
           "reason": reason,
-          "group": studentObjIdList.isNotEmpty,
-          "appliers": studentObjIdList,
+          "group": studentUidList.isNotEmpty,
+          "appliers": studentUidList,
           "time": mealType.convertEngStr,
           "date": weekDay,
         },
@@ -471,14 +471,14 @@ class DalgeurakService {
   }
 
   /// 선생님이 학생에게 선/후밥을 부여하는 함수입니다.
-  setTeacherMealException(MealType mealType, MealExceptionType type, String reason, String studentObjId, DateTime selectDate) async {
+  setTeacherMealException(MealType mealType, MealExceptionType type, String reason, String studentUid, DateTime selectDate) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/give",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
         data: {
           "type": type.convertStr,
-          "sid": studentObjId,
+          "sid": studentUid,
           "reason": reason,
           "date": DateFormat('yyyy-MM-dd').format(selectDate),
           "time": mealType.convertEngStr
@@ -526,6 +526,7 @@ class DalgeurakService {
       );
 
       List originalData = response.data['users'];
+      print(originalData);
       List formattingDataList = [];
       for (var element in originalData) {
         Map preprocessingData = json.decode(json.encode(element));
@@ -533,10 +534,11 @@ class DalgeurakService {
         List<DimigoinUser> preprocessingStudentList = [].cast<DimigoinUser>();
 
         for (var element2 in (originalAppliersList)) {
+          print(element2);
           if (isGetGroupAppliersStudentInfo) {
             preprocessingStudentList.add((await getSimpleStudentInfo(element2['student'], isExceptionEnter: element2['entered']))['content']);
           } else {
-            preprocessingStudentList.add(DimigoinUser.fromJson({"_id": element2['student'], "entered": element2['entered']}));
+            preprocessingStudentList.add(DimigoinUser.fromJson({"user_id": element2['student'], "entered": element2['entered']}));
           }
         }
 
@@ -584,13 +586,13 @@ class DalgeurakService {
   }
 
   /// 급식실에 선밥 학생이 들어올 경우 선생님/디넌이 입장 처리를 진행하는 함수입니다.
-  enterStudentMealException(String studentObjId) async {
+  enterStudentMealException(String studentUid) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/enter",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
         data: {
-          "sid": studentObjId,
+          "sid": studentUid,
         },
       );
 
@@ -648,13 +650,13 @@ class DalgeurakService {
   }
 
   /// 달그락 선생님 화면에 사용할 수 있는 간단한 학생의 정보를 불러올 수 있는 함수입니다.
-  getSimpleStudentInfo(String studentObjId, {bool? isExceptionEnter}) async {
+  getSimpleStudentInfo(String studentUid, {bool? isExceptionEnter}) async {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/user",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
         queryParameters: {
-          "student": studentObjId
+          "student": studentUid
         }
       );
 
@@ -951,14 +953,14 @@ class DalgeurakService {
       List<String> mealTypeStrList = [];
       mealTypeList.forEach((element) => mealTypeStrList.add(element.convertEngStr));
 
-      List<String> studentObjIdList = [];
-      studentList.forEach((element) => studentObjIdList.add(element.id!));
+      List<int> studentUidList = [];
+      studentList.forEach((element) => studentUidList.add(element.id!));
 
       Response response = await _dio.post(
           "$apiUrl/dalgeurak/cancel/students",
           options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
           data: {
-            "id": studentObjIdList,
+            "id": studentUidList,
             "reason": reason,
             "startDate": DateFormat('yyyy-MM-dd').format(startDate),
             "endDate": DateFormat('yyyy-MM-dd').format(endDate),
@@ -1028,12 +1030,12 @@ class DalgeurakService {
   }
 
   /// 학생에게 디넌 권한을 부여하는 함수입니다.
-  authorizeDienenPermission(String studentObjId) async {
+  authorizeDienenPermission(String studentUid) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak-management/permission",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"sid": studentObjId},
+        data: {"sid": studentUid},
       );
 
       return {
@@ -1049,12 +1051,12 @@ class DalgeurakService {
   }
 
   /// 학생에게 디넌 권한을 제거하는 함수입니다.
-  removeDienenPermission(String studentObjId) async {
+  removeDienenPermission(String studentUid) async {
     try {
       Response response = await _dio.delete(
         "$apiUrl/dalgeurak-management/permission",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"sid": studentObjId},
+        data: {"sid": studentUid},
       );
 
       return {
@@ -1070,12 +1072,12 @@ class DalgeurakService {
   }
 
   /// 학생에게 디넌장 권한을 위임하는 함수입니다.
-  mandateDienenLeaderPermission(String studentObjId) async {
+  mandateDienenLeaderPermission(String studentUid) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak-management/mandate",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        data: {"sid": studentObjId},
+        data: {"sid": studentUid},
       );
 
       return {
