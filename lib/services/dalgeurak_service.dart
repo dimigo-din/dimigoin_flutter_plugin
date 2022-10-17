@@ -331,7 +331,7 @@ class DalgeurakService {
   }
 
   /// 디넌이 수동으로 학생의 체크인을 진행하는 함수입니다.
-  mealCheckInByManager(String studentUid) async {
+  mealCheckInByManager(int studentUid) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/entrance",
@@ -352,7 +352,7 @@ class DalgeurakService {
   }
 
   /// 디넌이 학생에게 경고를 부여하는 함수입니다.
-  giveWarningToStudent(String studentUid, List warningType, String reason) async {
+  giveWarningToStudent(int studentUid, List warningType, String reason) async {
     try {
       warningType.forEach((element) => warningType[warningType.indexOf(element)] = (element as StudentWarningType).convertEngStr);
 
@@ -397,7 +397,7 @@ class DalgeurakService {
     }
   }
 
-  getStudentWarningList(String studentUid) async {
+  getStudentWarningList(int studentUid) async {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/warning/$studentUid",
@@ -471,7 +471,7 @@ class DalgeurakService {
   }
 
   /// 선생님이 학생에게 선/후밥을 부여하는 함수입니다.
-  setTeacherMealException(MealType mealType, MealExceptionType type, String reason, String studentUid, DateTime selectDate) async {
+  setTeacherMealException(MealType mealType, MealExceptionType type, String reason, int studentUid, DateTime selectDate) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/give",
@@ -586,7 +586,7 @@ class DalgeurakService {
   }
 
   /// 급식실에 선밥 학생이 들어올 경우 선생님/디넌이 입장 처리를 진행하는 함수입니다.
-  enterStudentMealException(String studentUid) async {
+  enterStudentMealException(int studentUid) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/enter",
@@ -650,7 +650,7 @@ class DalgeurakService {
   }
 
   /// 달그락 선생님 화면에 사용할 수 있는 간단한 학생의 정보를 불러올 수 있는 함수입니다.
-  getSimpleStudentInfo(String studentUid, {bool? isExceptionEnter}) async {
+  getSimpleStudentInfo(int studentUid, {bool? isExceptionEnter}) async {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/user",
@@ -1030,7 +1030,7 @@ class DalgeurakService {
   }
 
   /// 학생에게 디넌 권한을 부여하는 함수입니다.
-  authorizeDienenPermission(String studentUid) async {
+  authorizeDienenPermission(int studentUid) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak-management/permission",
@@ -1051,7 +1051,7 @@ class DalgeurakService {
   }
 
   /// 학생에게 디넌 권한을 제거하는 함수입니다.
-  removeDienenPermission(String studentUid) async {
+  removeDienenPermission(int studentUid) async {
     try {
       Response response = await _dio.delete(
         "$apiUrl/dalgeurak-management/permission",
@@ -1072,7 +1072,7 @@ class DalgeurakService {
   }
 
   /// 학생에게 디넌장 권한을 위임하는 함수입니다.
-  mandateDienenLeaderPermission(String studentUid) async {
+  mandateDienenLeaderPermission(int studentUid) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak-management/mandate",
