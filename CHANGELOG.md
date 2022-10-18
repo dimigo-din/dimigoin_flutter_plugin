@@ -1,3 +1,7 @@
+## 0.5.4
+
+- **FIX**: Dalgeurak Service - setMealException StudentId Type Error
+
 ## 0.5.3
 
 - **REFACTOR**: Dimigoin Login API Request & Response Form Respond

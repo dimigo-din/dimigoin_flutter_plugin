@@ -444,7 +444,7 @@ class DalgeurakService {
   }
 
   /// 학생이 직접 선/후밥을 신청하는 함수입니다.
-  setUserMealException(MealExceptionType type, String reason, List<String> studentUidList, MealType mealType, String weekDay) async {
+  setUserMealException(MealExceptionType type, String reason, List<int> studentUidList, MealType mealType, String weekDay) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/${type.convertStr}",
