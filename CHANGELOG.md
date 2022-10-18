@@ -1,3 +1,7 @@
+## 0.5.3
+
+- **REFACTOR**: Dimigoin Login API Request & Response Form Respond
+
 ## 0.5.2
 
 - **FIX**: DimigoinUser Instance Create Type Error

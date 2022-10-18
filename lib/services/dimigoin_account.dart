@@ -13,11 +13,12 @@ class DimigoinAccount {
   /// @param [username] 사용자의 디미고인 계정 아이디 string형 변수입니다.
   /// @param [password] 사용자의 디미고인 계정 비밀번호 string형 변수입니다.
   /// @returns 로그인에 성공할 경우 true, 실패할 경우 false를 반환합니다.
-  login(String userName, String password) async {
+  Future<Map> login(String userName, String password, bool isDalgeurakService) async {
     try {
       Response authResponse = await _dio.post(
         '$apiUrl/auth',
         options: Options(contentType: "application/json"),
+        queryParameters: {"dalgeurak": isDalgeurakService},
         data: {"username": userName, "password": password},
       );
 
@@ -27,9 +28,15 @@ class DimigoinAccount {
       await _storage.write(key: "dimigoinAccount_refreshToken", value: authResponse.data['refreshToken']);
       await storeUserData();
 
-      return true;
+      return {
+        "success": true,
+        "content": authResponse.data
+      };
     } catch (e) {
-      return false;
+      return {
+        "success": true,
+        "content": "로그인 중 오류가 발생 하였습니다."
+      };
     }
   }
 

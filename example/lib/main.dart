@@ -154,8 +154,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: _height * 0.075),
                   GestureDetector(
                     onTap: () async {
-                      bool isLogin = await _dimigoinAccount.login(userIdTextController.text, passwordTextController.text);
-                      isLogin ? _showToast("로그인에 성공하였습니다.") : _showToast("로그인에 실패하였습니다.");
+                      Map loginResult = await _dimigoinAccount.login(userIdTextController.text, passwordTextController.text, true);
+                      loginResult['success'] ? _showToast("로그인에 성공하였습니다.") : _showToast("로그인에 실패하였습니다.");
                     },
                     child: Container(
                       width: _width * 0.4,
