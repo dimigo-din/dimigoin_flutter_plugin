@@ -1,3 +1,7 @@
+## 0.5.5
+
+- **FIX**: Dimigoin Account - login Func Return Data Error
+
 ## 0.5.4
 
 - **FIX**: Dalgeurak Service - setMealException StudentId Type Error

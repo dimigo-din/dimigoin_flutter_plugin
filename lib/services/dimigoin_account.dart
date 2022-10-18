@@ -34,8 +34,8 @@ class DimigoinAccount {
       };
     } catch (e) {
       return {
-        "success": true,
-        "content": "로그인 중 오류가 발생 하였습니다."
+        "success": false,
+        "content": "로그인 중 오류가 발생 하였습니다.\n계정 정보를 정확히 입력했는지, 인터넷 연결이 불안정하지 않은지 등을 확인해주세요."
       };
     }
   }
