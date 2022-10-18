@@ -1,3 +1,7 @@
+## 0.5.2
+
+- **FIX**: DimigoinUser Instance Create Type Error
+
 ## 0.5.1
 
 - **REFACTOR**: All Dimigoin API - Masking API Request Form Respond
