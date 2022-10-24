@@ -18,8 +18,52 @@ enum DimigoinUserType {
 
 /// 디미고인 권한 열거형
 enum DimigoinPermissionType {
+  /// 방과후 권한
+  afterschool,
+  /// 방과후 신청 권한
+  afterschoolApplication,
   /// 인원관리 시스템 관리 권한
   attendance,
+  /// 계정 인증 권한
+  auth,
+  /// 동아리 권한
+  circle,
+  /// 동아리 신청 권한
+  circleApplication,
+  /// 동아리 신청 관리 권한
+  circleApplicationManagement,
+  /// 설정 권한
+  config,
+  /// 뎃츠 권한
+  dets,
+  /// 뎃츠 신청 권한
+  detsApplication,
+  /// 그 외 권한
+  etc,
+  /// FCM 권한
+  fcm,
+  /// 파일 권한
+  file,
+  /// 인강실 신청 권한
+  ingangApplication,
+  /// 급식 권한
+  meal,
+  /// 멘토링 권한
+  mentoring,
+  /// 멘토링 신청 권한
+  mentoringApplication,
+  /// 공지 권한
+  notice,
+  /// 외출 관리 권한
+  outgoManagement,
+  /// 외출 요청 권한
+  outgoRequest,
+  /// 장소 권한
+  place,
+  /// 시간표 권한
+  timetable,
+  /// 유저 권한
+  user,
   /// 달그락 관리자 권한
   dalgeurak,
   /// 달그락 디넌장 권한
@@ -46,7 +90,29 @@ extension DimigoinUserTypeExtension on DimigoinUserType {
 extension DimigoinPermissionTypeExtension on DimigoinPermissionType {
   String get convertStr {
     switch (this) {
+      case DimigoinPermissionType.afterschool: return "afterschool";
+      case DimigoinPermissionType.afterschoolApplication: return "afterschool-application";
       case DimigoinPermissionType.attendance: return "attendance";
+      case DimigoinPermissionType.auth: return "auth";
+      case DimigoinPermissionType.circle: return "circle";
+      case DimigoinPermissionType.circleApplication: return "circle-application";
+      case DimigoinPermissionType.circleApplicationManagement: return "circle-application-management";
+      case DimigoinPermissionType.config: return "config";
+      case DimigoinPermissionType.dets: return "dets";
+      case DimigoinPermissionType.detsApplication: return "dets-application";
+      case DimigoinPermissionType.etc: return "etc";
+      case DimigoinPermissionType.fcm: return "fcm";
+      case DimigoinPermissionType.file: return "file";
+      case DimigoinPermissionType.ingangApplication: return "ingang-application";
+      case DimigoinPermissionType.meal: return "meal";
+      case DimigoinPermissionType.mentoring: return "mentoring";
+      case DimigoinPermissionType.mentoringApplication: return "mentoring-application";
+      case DimigoinPermissionType.notice: return "notice";
+      case DimigoinPermissionType.outgoManagement: return "outgo-management";
+      case DimigoinPermissionType.outgoRequest: return "outgo-request";
+      case DimigoinPermissionType.place: return "place";
+      case DimigoinPermissionType.timetable: return "timetable";
+      case DimigoinPermissionType.user: return "user";
       case DimigoinPermissionType.dalgeurak: return "dalgeurak";
       case DimigoinPermissionType.dalgeurakManagement: return "dalgeurak-management";
       default: return "";
@@ -69,7 +135,29 @@ extension DimigoinAccountTypeExtension on String {
 
   DimigoinPermissionType get convertDimigoinPermissionType {
     switch (this) {
+      case "afterschool": return DimigoinPermissionType.afterschool;
+      case "afterschool-application": return DimigoinPermissionType.afterschoolApplication;
       case "attendance": return DimigoinPermissionType.attendance;
+      case "auth": return DimigoinPermissionType.auth;
+      case "circle": return DimigoinPermissionType.circle;
+      case "circle-application": return DimigoinPermissionType.circleApplication;
+      case "circle-applcation-management": return DimigoinPermissionType.circleApplicationManagement;
+      case "config": return DimigoinPermissionType.config;
+      case "dets": return DimigoinPermissionType.dets;
+      case "dets-application": return DimigoinPermissionType.detsApplication;
+      case "etc": return DimigoinPermissionType.etc;
+      case "fcm": return DimigoinPermissionType.fcm;
+      case "file": return DimigoinPermissionType.file;
+      case "ingang-application": return DimigoinPermissionType.ingangApplication;
+      case "meal": return DimigoinPermissionType.meal;
+      case "mentoring": return DimigoinPermissionType.mentoring;
+      case "mentoring-application": return DimigoinPermissionType.mentoringApplication;
+      case "notice": return DimigoinPermissionType.notice;
+      case "outgo-management": return DimigoinPermissionType.outgoManagement;
+      case "outgo-request": return DimigoinPermissionType.outgoRequest;
+      case "place": return DimigoinPermissionType.place;
+      case "timetable": return DimigoinPermissionType.timetable;
+      case "user": return DimigoinPermissionType.user;
       case "dalgeurak": return DimigoinPermissionType.dalgeurak;
       case "dalgeurak-management": return DimigoinPermissionType.dalgeurakManagement;
       default: return DimigoinPermissionType.none;
