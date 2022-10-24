@@ -259,7 +259,7 @@ class DimigoinUser {
     _classNum = json['class'];
     _gradeNum = json['grade'];
     _studentNum = json['number'];
-    _studentId = (json['serial'].runtimeType == int) ? json['serial'] : int.parse(json['serial']);
+    _studentId = (json['serial'].runtimeType == int) ? json['serial'] : (json['serial'] != null ? int.parse(json['serial']) : null);
     if (json['photos'] != null) {
       _photos = [];
       json['photos'].forEach((v) {
