@@ -858,11 +858,14 @@ class DalgeurakService {
   }
 
   /// 학생이 간편식을 먹을 때 체크인을 진행하는 함수입니다.
-  checkInConvenienceFood() async {
+  checkInConvenienceFood(int studentUid) async {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/convenience/checkin",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {
+          "sid": studentUid
+        }
       );
 
       return {

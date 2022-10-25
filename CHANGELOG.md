@@ -1,3 +1,7 @@
+## 0.5.7
+
+- **REFACTOR**: Dalgeurak Service - checkInConvenienceFood Func Request Form Respond
+
 ## 0.5.6
 
 - **FEAT**: Dalgeurak Service - getConvenienceFoodStudentList Func
