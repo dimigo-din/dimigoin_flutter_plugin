@@ -1,3 +1,9 @@
+## 0.5.6
+
+- **FEAT**: Dalgeurak Service - getConvenienceFoodStudentList Func
+- **FIX**: Dimigoin Account StudentID Null Data Error
+- **FEAT**: Dimigoin Account Permission Type
+
 ## 0.5.5
 
 - **FIX**: Dimigoin Account - login Func Return Data Error

@@ -877,6 +877,46 @@ class DalgeurakService {
     }
   }
 
+  /// 간편식을 신청한 학생들의 리스트를 불러오는 함수입니다.
+  getConvenienceFoodStudentList() async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/convenience/users",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      Map originalData = response.data;
+      Map formattingData = {
+        ConvenienceFoodType.sandwich: [],
+        ConvenienceFoodType.salad: [],
+        ConvenienceFoodType.misu: []
+      };
+
+      for (ConvenienceFoodType foodType in formattingData.keys) {
+        if ((originalData[foodType.convertEng] as List).isNotEmpty) {
+          originalData[foodType.convertEng].forEach(
+                  (element) => formattingData[foodType].add(
+                  DalgeurakConvenienceFood(
+                      foodType: foodType,
+                      student: DimigoinUser.fromJson(element)
+                  )
+              )
+          );
+        }
+      }
+
+      return {
+        "success": true,
+        "content": formattingData
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 급식실에서 잔류 급식비 단가를 변경하는 함수입니다.
   setStayMealPrice(int price) async {
     try {
