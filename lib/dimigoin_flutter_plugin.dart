@@ -30,6 +30,7 @@ DimigoinAccount _dimigoinLogin = DimigoinAccount();
 DalgeurakService _dalgeurakService = DalgeurakService();
 
 late String _accessToken;
+late String? _dimigoStudentAPIAuthToken;
 late DimigoinUser _currentUser;
 bool _isLogin = false;
 StreamController<DimigoinUser?> _userChangeController = StreamController<DimigoinUser?>();
@@ -37,7 +38,9 @@ StreamController<DimigoinUser?> _userChangeController = StreamController<Dimigoi
 StreamSocket _studentMealStatusStreamSocket = StreamSocket();
 
 class DimigoinFlutterPlugin {
-  initializeApp() async {
+  initializeApp({String? dimigoStudentAPIAuthToken}) async {
+    _dimigoStudentAPIAuthToken = dimigoStudentAPIAuthToken;
+
     if (await _dimigoinLogin.checkNowLogin()) {
       _accessToken = await _dimigoinLogin.loadSavedToken();
 

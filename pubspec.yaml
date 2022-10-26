@@ -1,6 +1,6 @@
 name: dimigoin_flutter_plugin
 description: A dimigoin flutter plugin for developing dimigo-related applications.
-version: 0.5.7
+version: 0.5.8
 homepage: https://github.com/dimigoin/dimigoin_flutter_plugin
 
 environment:

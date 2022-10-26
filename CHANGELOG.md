@@ -1,3 +1,7 @@
+## 0.5.8
+
+- **FIX**: Dalgeurak Service - getAllStudentList Func Auth Error
+
 ## 0.5.7
 
 - **REFACTOR**: Dalgeurak Service - checkInConvenienceFood Func Request Form Respond

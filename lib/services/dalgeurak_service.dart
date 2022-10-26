@@ -1205,7 +1205,7 @@ class DalgeurakService {
       for (int i=1; i<=3; i++) {
         Response response = await _dio.get(
           "$dimigoStudentApiUrl/user-students/search",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Basic $_dimigoStudentAPIAuthToken'}),
           queryParameters: {"grade": i}
         );
 
@@ -1218,9 +1218,15 @@ class DalgeurakService {
         "content": formattingData
       };
     } on DioError catch (e) {
+      String errorContent;
+      if (e.response != null && e.response?.statusCode != null && e.response?.statusCode == 401) {
+        errorContent = "디미고 Student API의 Auth Token이 플러그인 초기화 시 등록되지 않았거나 정확하지 않습니다. 서비스 개발자에게 문의해주세요.";
+      } else {
+        errorContent = "서버와의 통신에 오류가 발생하였습니다. 오류가 계속될 경우 서비스 개발자에게 문의해주세요.";
+      }
       return {
         "success": false,
-        "content": "서버와의 통신에 오류가 발생하였습니다. 오류가 계속될 경우 달그락 개발자에게 문의해주세요."
+        "content": errorContent
       };
     }
   }
