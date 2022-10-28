@@ -1197,8 +1197,8 @@ class DalgeurakService {
     }
   }
 
-  /// 현재 디미고인에 등록되어있는 모든 학생들의 정보를 리스트 형태로 반환하는 함수입니다. 디미고 Student API를 사용합니다.
-  getAllStudentList() async {
+  /// 현재 디미고 Student API에 등록되어있는 모든 학생들의 정보를 리스트 형태로 반환하는 함수입니다.
+  getAllStudentListInDimigoStudentAPI() async {
     try {
       List formattingData = [];
 
@@ -1224,6 +1224,34 @@ class DalgeurakService {
       } else {
         errorContent = "서버와의 통신에 오류가 발생하였습니다. 오류가 계속될 경우 서비스 개발자에게 문의해주세요.";
       }
+      return {
+        "success": false,
+        "content": errorContent
+      };
+    }
+  }
+
+  /// 현재 디미고인에 등록되어있는 모든 학생들의 정보를 리스트 형태로 반환하는 함수입니다.
+  getAllStudentListInDimigoin() async {
+    try {
+      List formattingData = [];
+
+      for (int i=1; i<=3; i++) {
+        Response response = await _dio.get(
+            "$apiUrl/dalgeurak/student",
+            options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        );
+
+        List originalData = response.data['students'];
+        originalData.forEach((element) => formattingData.add(DimigoinUser.fromJson(element)));
+      }
+
+      return {
+        "success": true,
+        "content": formattingData
+      };
+    } on DioError catch (e) {
+      String errorContent = "서버와의 통신에 오류가 발생하였습니다. 오류가 계속될 경우 서비스 개발자에게 문의해주세요.";;
       return {
         "success": false,
         "content": errorContent

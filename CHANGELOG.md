@@ -1,3 +1,8 @@
+## 0.5.9
+
+- **FEAT**: Dalgeurak Service - getAllStudentListInDimigoin Func
+- **FEAT**: Dalgeurak Service - getAllStudentListInDimigoStudentAPI Func
+
 ## 0.5.8
 
 - **FIX**: Dalgeurak Service - getAllStudentList Func Auth Error
