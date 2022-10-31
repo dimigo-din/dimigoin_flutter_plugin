@@ -21,7 +21,7 @@ part 'models/stream_socket.dart';
 final _dio = Dio();
 final _storage = const FlutterSecureStorage();
 
-const apiUrl = "https://api.dimigo.in";
+String apiUrl = "https://api.dimigo.in";
 const socketApiUrl = "http://oci.dimigo.in:4999";
 const dimigoStudentApiUrl = "https://api.dimigo.hs.kr/v1";
 
@@ -38,8 +38,9 @@ StreamController<DimigoinUser?> _userChangeController = StreamController<Dimigoi
 StreamSocket _studentMealStatusStreamSocket = StreamSocket();
 
 class DimigoinFlutterPlugin {
-  initializeApp({String? dimigoStudentAPIAuthToken}) async {
+  initializeApp({String? dimigoStudentAPIAuthToken, String? customApiUrl}) async {
     _dimigoStudentAPIAuthToken = dimigoStudentAPIAuthToken;
+    if (customApiUrl != null) { apiUrl = customApiUrl; }
 
     if (await _dimigoinLogin.checkNowLogin()) {
       _accessToken = await _dimigoinLogin.loadSavedToken();
