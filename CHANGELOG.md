@@ -1,3 +1,11 @@
+## 0.5.12
+
+- **FEAT**: Dalgeurak Service | MealExceptionType - convertKorStr Extension
+- **FEAT**: Dalgeurak Service | ConvenienceFood Model - isCheckin Parameter
+- **REFACTOR**: Dalgeurak Service | getRemainMealExceptionStudentAmount Func
+- **FEAT**: Custom Setting - DImigoin API URL
+- **REFACTOR**: Dalgeurak Service | MealException API Request Form Respond
+
 ## 0.5.11
 
 - **FIX**: Dalgeurak Service - getAllStudentListInDimigoin Func
