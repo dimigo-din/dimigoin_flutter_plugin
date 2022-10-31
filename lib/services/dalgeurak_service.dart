@@ -907,12 +907,13 @@ class DalgeurakService {
       for (ConvenienceFoodType foodType in formattingData.keys) {
         if ((originalData[foodType.convertEng] as List).isNotEmpty) {
           originalData[foodType.convertEng].forEach(
-                  (element) => formattingData[foodType].add(
-                  DalgeurakConvenienceFood(
-                      foodType: foodType,
-                      student: DimigoinUser.fromJson(element)
-                  )
+            (element) => formattingData[foodType].add(
+              DalgeurakConvenienceFood(
+                foodType: foodType,
+                student: DimigoinUser.fromJson(element),
+                isCheckin: element['checkin']
               )
+            )
           );
         }
       }
