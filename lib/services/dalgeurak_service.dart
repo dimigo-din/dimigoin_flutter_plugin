@@ -1245,15 +1245,13 @@ class DalgeurakService {
     try {
       List formattingData = [];
 
-      for (int i=1; i<=3; i++) {
-        Response response = await _dio.get(
-            "$apiUrl/dalgeurak/student",
-            options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
-        );
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/student",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
 
-        List originalData = response.data['students'];
-        originalData.forEach((element) => formattingData.add(DimigoinUser.fromJson(element)));
-      }
+      List originalData = response.data['students'];
+      originalData.forEach((element) => formattingData.add(DimigoinUser.fromJson(element)));
 
       return {
         "success": true,
