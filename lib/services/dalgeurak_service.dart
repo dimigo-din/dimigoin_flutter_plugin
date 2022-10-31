@@ -142,6 +142,15 @@ extension MealExceptionTypeExtension on MealExceptionType {
       default: return "";
     }
   }
+
+  String get convertKorStr {
+    switch (this) {
+      case MealExceptionType.first: return "선밥";
+      case MealExceptionType.last: return "후밥";
+      case MealExceptionType.normal: return "일반";
+      default: return "";
+    }
+  }
 }
 
 /// 급식 선/후밥 상태 열거형을 위한 Extension
