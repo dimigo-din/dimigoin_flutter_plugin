@@ -626,17 +626,17 @@ class DalgeurakService {
     }
   }
 
-  /// 현재 후밥 신청이 가능한 학생 수를 반환하는 함수입니다.
-  getRemainLastMealExceptionStudentAmount(String weekDay, MealType mealType) async {
+  /// 현재 선/후밥 신청이 가능한 학생 수를 반환하는 함수입니다.
+  getRemainMealExceptionStudentAmount() async {
     try {
       Response response = await _dio.get(
-        "$apiUrl/dalgeurak/exception/$weekDay/$mealType",
+        "$apiUrl/dalgeurak/exception/remain",
         options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
       );
 
       return {
         "success": true,
-        "content": response.data['remain']
+        "content": response.data
       };
     } on DioError catch (e) {
       return {
