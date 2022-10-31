@@ -10,7 +10,7 @@
 먼저 첫 번째로, `pubspec.yaml`파일에 아래 코드를 작성하여 프로젝트에 본 플러그인을 추가합니다.
 ```yaml
 dependencies:
-  dimigoin_flutter_plugin: ^0.5.9
+  dimigoin_flutter_plugin: ^0.5.10
 ```
 
 본 플러그인에서는 아래 리스트와 같은 패키지를 사용합니다. 개발을 진행할 떄 참고해주세요.

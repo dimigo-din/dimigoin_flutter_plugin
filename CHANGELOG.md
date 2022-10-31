@@ -1,3 +1,7 @@
+## 0.5.10
+
+- **FEAT**: Dalgeurak Service - convertConvenienceFoodType Extension
+
 ## 0.5.9
 
 - **FEAT**: Dalgeurak Service - getAllStudentListInDimigoin Func

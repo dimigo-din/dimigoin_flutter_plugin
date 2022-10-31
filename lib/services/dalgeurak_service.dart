@@ -300,6 +300,15 @@ extension DalgeurakMealTypeExtension on String {
       default: return MealExceptionStatusType.etc;
     }
   }
+
+  ConvenienceFoodType get convertConvenienceFoodType {
+    switch (this) {
+      case "sandwich": return ConvenienceFoodType.sandwich;
+      case "salad": return ConvenienceFoodType.salad;
+      case "misu": return ConvenienceFoodType.misu;
+      default: return ConvenienceFoodType.none;
+    }
+  }
 }
 
 
