@@ -1165,7 +1165,7 @@ class DalgeurakService {
 
       return {
         "success": true,
-        "content": response.data['nowSequence']
+        "content": response.data
       };
     } on DioError catch (e) {
       return {

@@ -1,3 +1,7 @@
+## 0.5.13
+
+- **REFACTOR**: Dalgeurak Service | getNowSequence Func Response Data Form
+
 ## 0.5.12
 
 - **FEAT**: Dalgeurak Service | MealExceptionType - convertKorStr Extension
