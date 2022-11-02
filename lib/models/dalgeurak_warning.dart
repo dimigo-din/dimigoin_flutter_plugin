@@ -6,14 +6,14 @@ class DalgeurakWarning {
   String? _id;
   List<StudentWarningType>? _warningTypeList;
   String? _reason;
-  String? _studentObjId;
+  int? _studentUid;
   DateTime? _date;
 
 
   String? get id => _id;
   List<StudentWarningType>? get warningTypeList => _warningTypeList;
   String? get reason => _reason;
-  String? get studentObjId => _studentObjId;
+  int? get studentUid => _studentUid;
   DateTime? get date => _date;
 
 
@@ -21,12 +21,12 @@ class DalgeurakWarning {
     required String? id,
     required List<StudentWarningType>? warningTypeList,
     required String? reason,
-    required String? studentObjId,
+    required int? studentUid,
     required DateTime? date,}){
     _id = id;
     _warningTypeList = warningTypeList;
     _reason = reason;
-    _studentObjId = studentObjId;
+    _studentUid = studentUid;
     _date = date;
 }
 
@@ -34,7 +34,7 @@ class DalgeurakWarning {
     _id = json['_id'];
     _warningTypeList = (json['type'] as List).cast<String>().map((v) => v.convertStudentWarningType).cast<StudentWarningType>().toList();
     _reason = json['reason'];
-    _studentObjId = json['student'];
+    _studentUid = json['student'];
     _date = DateTime.parse(json['date']);
   }
 
@@ -43,7 +43,7 @@ class DalgeurakWarning {
     map['_id'] = _id;
     map['type'] = _warningTypeList?.map((v) => v.convertEngStr).cast<String>().toList();
     map['reason'] = _reason;
-    map['student'] = _studentObjId;
+    map['student'] = _studentUid;
     map['date'] = date.toString();
     return map;
   }
