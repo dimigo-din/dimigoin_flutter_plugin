@@ -876,6 +876,27 @@ class DalgeurakService {
     }
   }
 
+  /// 달그락 간편식 체크인에서 금요귀가임을 등록할 수 있는 함수입니다.
+  registerFridayHomecomingInConvenienceFood(int studentUid) async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/convenience/fri",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"sid": studentUid},
+      );
+
+      return {
+        "success": true,
+        "content": response.data['date']
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 학생이 간편식을 먹을 때 체크인을 진행하는 함수입니다.
   checkInConvenienceFood(int studentUid) async {
     try {

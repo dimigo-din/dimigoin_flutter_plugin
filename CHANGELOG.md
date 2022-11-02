@@ -1,3 +1,8 @@
+## 0.5.14
+
+- **FEAT**: Dalgeurak Service | registerFridayHomecomingInConvenienceFood Function
+- **FIX**: Dalgeurak Warning - studentUid Type Error
+
 ## 0.5.13
 
 - **REFACTOR**: Dalgeurak Service | getNowSequence Func Response Data Form
