@@ -545,7 +545,6 @@ class DalgeurakService {
       );
 
       List originalData = response.data['users'];
-      print(originalData);
       List formattingDataList = [];
       for (var element in originalData) {
         Map preprocessingData = json.decode(json.encode(element));
@@ -553,7 +552,6 @@ class DalgeurakService {
         List<DimigoinUser> preprocessingStudentList = [].cast<DimigoinUser>();
 
         for (var element2 in (originalAppliersList)) {
-          print(element2);
           if (isGetGroupAppliersStudentInfo) {
             preprocessingStudentList.add((await getSimpleStudentInfo(element2['student'], isExceptionEnter: element2['entered']))['content']);
           } else {
@@ -1279,7 +1277,6 @@ class DalgeurakService {
         "content": response.data
       };
     } on DioError catch (e) {
-      print(e.response?.data);
       return {
         "success": false,
         "content": e.response?.data["message"]
