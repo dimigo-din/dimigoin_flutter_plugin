@@ -855,6 +855,26 @@ class DalgeurakService {
     }
   }
 
+  /// 자신의 간편식 신청 현황 정보를 가져오는 함수입니다.
+  getMyConvenienceFoodApplicationInfo() async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/convenience/me",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      return {
+        "success": true,
+        "content": response.data['conveniences']
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 학생이 간편식을 신청하는 함수입니다.
   applicationConvenienceFood(MealType mealType, ConvenienceFoodType foodType) async {
     try {
@@ -920,6 +940,27 @@ class DalgeurakService {
     }
   }
 
+  /// 간편식 체크인을 취소하는 함수입니다.
+  cancelCheckInConvenienceFood(int studentUid) async {
+    try {
+      Response response = await _dio.delete(
+        "$apiUrl/dalgeurak/convenience/checkin",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        data: {"sid": studentUid}
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 간편식을 신청한 학생들의 리스트를 불러오는 함수입니다.
   getConvenienceFoodStudentList() async {
     try {
@@ -952,6 +993,187 @@ class DalgeurakService {
       return {
         "success": true,
         "content": formattingData
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 학생을 간편식 블랙리스트에 추가하는 함수입니다.
+  addStudentInBlackListConvenienceFood(int studentUid) async {
+    try {
+      Response response = await _dio.post(
+          "$apiUrl/dalgeurak/convenience/blacklist",
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          data: {"sid": studentUid}
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 학생을 간편식 블랙리스트에서 제거하는 함수입니다.
+  removeStudentInBlackListConvenienceFood(int studentUid) async {
+    try {
+      Response response = await _dio.delete(
+          "$apiUrl/dalgeurak/convenience/blacklist",
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          data: {"sid": studentUid}
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 특정한 간편식 체크인 정보를 불러오는 함수입니다.
+  getSpecificConvenienceFoodCheckInInfo(DateTime firstDate, DateTime lastDate) async {
+    try {
+      DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+
+      Response response = await _dio.get(
+          "$apiUrl/dalgeurak/convenience/${dateFormat.format(firstDate)}/${dateFormat.format(lastDate)}",
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      List originalData = response.data['checkin'];
+      List formattingData = [];
+      for (var element in originalData) {
+        int index = originalData.indexOf(element);
+
+        formattingData.add({});
+
+        (formattingData[index] as Map).addAll({
+          "duration": {
+            "start": DateTime.tryParse(element['duration']['start']),
+            "end": DateTime.tryParse(element['duration']['end']),
+          }
+        });
+
+
+        for (MealType mealType in [MealType.breakfast, MealType.lunch, MealType.dinner]) {
+          formattingData[index][mealType.convertEngStr] = [];
+
+          if (element[mealType.convertEngStr] == null) { continue; }
+
+          for (var element2 in (element[mealType.convertEngStr] as List)) {
+            (formattingData[index][mealType.convertEngStr] as List).add(
+                DalgeurakConvenienceFood(
+                  dateTime: DateTime.tryParse(element2['date']),
+                  student: DimigoinUser.fromJson(element2['student']),
+                )
+            );
+          }
+        }
+      }
+
+      return {
+        "success": true,
+        "content": formattingData,
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 간편식에 관한 모든 정보들을 불러오는 함수입니다.
+  getAllConvenienceFoodInfo() async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/convenience/data",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      List originalData = response.data['convenience'];
+      List formattingData = [...originalData];
+
+      for (var element in originalData) {
+        int index = originalData.indexOf(element);
+        
+
+        (formattingData[index] as Map).update(
+          "duration", (value) => {
+            "start": DateTime.parse(element['duration']['start']),
+            "end": DateTime.parse(element['duration']['end']),
+            "applicationend": DateTime.parse(element['duration']['applicationend']),
+          }
+        );
+
+        List<DalgeurakConvenienceFood> formattingApplicationList = [];
+
+        (element['applications'] as List).forEach(
+            (e) => formattingApplicationList.add(
+                DalgeurakConvenienceFood(
+                  dateTime: DateTime.tryParse(e['date']),
+                  student: DimigoinUser.fromJson(e['student']),
+                )
+            )
+        );
+
+        formattingData[index]['applications'] = formattingApplicationList;
+      }
+
+      return {
+        "success": true,
+        "content": formattingData,
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 학생들이 간편식 체크인을 진행한 정보를 불러오는 함수입니다.
+  getConvenienceCheckInInfo() async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/convenience/checkeat",
+        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+      );
+
+      List originalData = response.data['data'];
+      List formattingData = [];
+
+      originalData.forEach((element) {
+        int index = originalData.indexOf(element);
+
+
+        formattingData.add({});
+
+        (formattingData[index] as Map).addAll({"student": element['student']});
+
+        List formattingDateList = [];
+        (element['date'] as List).forEach((element2) => formattingDateList.add(DateTime.parse(element2)));
+        formattingData[index]['date'] = formattingDateList;
+      });
+
+
+      return {
+        "success": true,
+        "content": formattingData,
       };
     } on DioError catch (e) {
       return {
