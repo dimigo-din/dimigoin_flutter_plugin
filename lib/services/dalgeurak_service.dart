@@ -676,6 +676,48 @@ class DalgeurakService {
     }
   }
 
+  /// 학생을 선/후밥 블랙리스트에 추가하는 함수입니다.
+  addStudentInBlackListMealException(int studentUid) async {
+    try {
+      Response response = await _dio.post(
+          "$apiUrl/dalgeurak/exception/blacklist",
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          data: {"sid": studentUid}
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 학생을 선/후밥 블랙리스트에서 제거하는 함수입니다.
+  removeStudentInBlackListMealException(int studentUid) async {
+    try {
+      Response response = await _dio.delete(
+          "$apiUrl/dalgeurak/exception/blacklist",
+          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          data: {"sid": studentUid}
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 달그락 선생님 화면에 사용할 수 있는 간단한 학생의 정보를 불러올 수 있는 함수입니다.
   getSimpleStudentInfo(int studentUid, {bool? isExceptionEnter}) async {
     try {

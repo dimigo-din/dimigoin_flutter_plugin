@@ -1,3 +1,9 @@
+## 0.5.15
+
+- **FEAT**: Dalgeurak Service | MealType Exception - convertKor2Str
+- **FEAT**: Dalgeurak Service | ConvenienceFood Functions
+- **FEAT**: Dalgeurak Service | MealException Blacklist Functions
+
 ## 0.5.14
 
 - **FEAT**: Dalgeurak Service | registerFridayHomecomingInConvenienceFood Function
