@@ -186,6 +186,16 @@ extension MealTypeExtension on MealType {
         return "";
     }
   }
+
+  String get convertKor2Str {
+    switch (this) {
+      case MealType.breakfast: return "조식";
+      case MealType.lunch: return "중식";
+      case MealType.dinner: return "석식";
+      default:
+        return "";
+    }
+  }
 }
 
 /// 학생의 경고 유형 열거형을 위한 Extension
