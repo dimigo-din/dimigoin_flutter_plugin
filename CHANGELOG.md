@@ -1,3 +1,7 @@
+## 0.5.16
+
+- **FIX**: Dalgeurak Service | getAllUserMealException Function
+
 ## 0.5.15
 
 - **FEAT**: Dalgeurak Service | MealType Exception - convertKor2Str

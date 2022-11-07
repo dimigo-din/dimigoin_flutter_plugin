@@ -562,11 +562,8 @@ class DalgeurakService {
         List<DimigoinUser> preprocessingStudentList = [].cast<DimigoinUser>();
 
         for (var element2 in (originalAppliersList)) {
-          if (isGetGroupAppliersStudentInfo) {
-            preprocessingStudentList.add((await getSimpleStudentInfo(element2['student'], isExceptionEnter: element2['entered']))['content']);
-          } else {
-            preprocessingStudentList.add(DimigoinUser.fromJson({"user_id": element2['student'], "entered": element2['entered']}));
-          }
+          Map studentData = {...element2['student'], 'entered': element2['entered']};
+          preprocessingStudentList.add(DimigoinUser.fromJson(studentData));
         }
 
         preprocessingData['appliers'] = preprocessingStudentList;
