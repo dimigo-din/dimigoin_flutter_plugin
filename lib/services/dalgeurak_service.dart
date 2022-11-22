@@ -342,7 +342,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"key": jwtToken},
       );
 
@@ -363,7 +363,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/entrance",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"sid": studentUid},
       );
 
@@ -386,7 +386,7 @@ class DalgeurakService {
 
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/warning",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"sid": studentUid, "type": warningType, "reason": reason},
       );
 
@@ -406,7 +406,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/warning",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       List originalData = response.data['warning'];
@@ -429,7 +429,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/warning/$studentUid",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       List originalData = response.data['warning'];
@@ -453,7 +453,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/me",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       Map result = response.data;
@@ -476,7 +476,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {
           "reason": reason,
           "group": studentUidList.isNotEmpty,
@@ -504,7 +504,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/give",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {
           "type": type.convertStr,
           "sid": studentUid,
@@ -531,7 +531,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.delete(
         "$apiUrl/dalgeurak/exception",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       return {
@@ -551,7 +551,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/exception/",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       List originalData = response.data['users'];
@@ -589,7 +589,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.patch(
         "$apiUrl/dalgeurak/exception/application",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {
           "permission": statusType.convertStr,
           "id": exceptionModelId,
@@ -614,7 +614,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/enter",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {
           "sid": studentUid,
         },
@@ -637,7 +637,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/exception/remain",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       return {
@@ -657,7 +657,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/exception/ticket",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"time": mealType.convertEngStr},
       );
 
@@ -678,7 +678,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
           "$apiUrl/dalgeurak/exception/blacklist",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json"),
           data: {"sid": studentUid}
       );
 
@@ -699,7 +699,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.delete(
           "$apiUrl/dalgeurak/exception/blacklist",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json"),
           data: {"sid": studentUid}
       );
 
@@ -720,7 +720,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/user",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         queryParameters: {
           "student": studentUid
         }
@@ -765,7 +765,7 @@ class DalgeurakService {
 
       Response response = await _dio.patch(
         "$apiUrl/dalgeurak/sequence/$grade",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"time": mealType.convertEngStr, "sequences": sequence},
       );
 
@@ -805,7 +805,7 @@ class DalgeurakService {
 
       Response response = await _dio.patch(
         "$apiUrl/dalgeurak/time/$grade",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"time": mealType.convertEngStr, "classTimes": time},
       );
 
@@ -845,7 +845,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/extra",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"extraMinute": time},
       );
 
@@ -866,7 +866,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.put(
         "$apiUrl/dalgeurak/waitingLine",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"position": placeType.convertEng},
       );
 
@@ -887,7 +887,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/convenience",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       return {
@@ -907,7 +907,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/convenience/me",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       return {
@@ -927,7 +927,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/convenience",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"time": mealType.convertEngStr, "food": foodType.convertEng},
       );
 
@@ -948,7 +948,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/convenience/fri",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"sid": studentUid},
       );
 
@@ -969,7 +969,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/convenience/checkin",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {
           "sid": studentUid
         }
@@ -992,7 +992,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.delete(
         "$apiUrl/dalgeurak/convenience/checkin",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"sid": studentUid}
       );
 
@@ -1013,7 +1013,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/convenience/users",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       Map originalData = response.data;
@@ -1054,7 +1054,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
           "$apiUrl/dalgeurak/convenience/blacklist",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json"),
           data: {"sid": studentUid}
       );
 
@@ -1075,7 +1075,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.delete(
           "$apiUrl/dalgeurak/convenience/blacklist",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json"),
           data: {"sid": studentUid}
       );
 
@@ -1098,7 +1098,7 @@ class DalgeurakService {
 
       Response response = await _dio.get(
           "$apiUrl/dalgeurak/convenience/${dateFormat.format(firstDate)}/${dateFormat.format(lastDate)}",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json"),
       );
 
       List originalData = response.data['checkin'];
@@ -1149,7 +1149,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/convenience/data",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       List originalData = response.data['convenience'];
@@ -1198,7 +1198,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/convenience/checkeat",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       List originalData = response.data['data'];
@@ -1235,7 +1235,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.patch(
         "$apiUrl/dalgeurak/stayMealPrice",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"price": price}
       );
 
@@ -1256,7 +1256,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
           "$apiUrl/dalgeurak/stayMealPrice",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json"),
       );
 
       return {
@@ -1279,7 +1279,7 @@ class DalgeurakService {
 
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/cancel",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {
           "reason": reason,
           "startDate": DateFormat('yyyy-MM-dd').format(startDate),
@@ -1311,7 +1311,7 @@ class DalgeurakService {
 
       Response response = await _dio.post(
           "$apiUrl/dalgeurak/cancel/students",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json"),
           data: {
             "id": studentUidList,
             "reason": reason,
@@ -1338,7 +1338,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.patch(
           "$apiUrl/dalgeurak/cancel",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json"),
           data: {
             "id": mealCancelObjId,
             "approve": isApprove,
@@ -1362,7 +1362,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
           "$apiUrl/dalgeurak/cancel",
-          options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+          options: Options(contentType: "application/json"),
       );
 
       List originalData = response.data['students'];
@@ -1386,7 +1386,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak-management/permission",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"sid": studentUid},
       );
 
@@ -1407,7 +1407,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.delete(
         "$apiUrl/dalgeurak-management/permission",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"sid": studentUid},
       );
 
@@ -1428,7 +1428,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak-management/mandate",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"sid": studentUid},
       );
 
@@ -1449,7 +1449,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/nowSequence",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       return {
@@ -1469,7 +1469,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.post(
         "$apiUrl/dalgeurak/token",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"deviceToken": token},
       );
 
@@ -1490,7 +1490,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.delete(
         "$apiUrl/dalgeurak/token",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
         data: {"deviceToken": token},
       );
 
@@ -1547,7 +1547,7 @@ class DalgeurakService {
 
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/student",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       List originalData = response.data['students'];
@@ -1558,10 +1558,9 @@ class DalgeurakService {
         "content": formattingData
       };
     } on DioError catch (e) {
-      String errorContent = "서버와의 통신에 오류가 발생하였습니다. 오류가 계속될 경우 서비스 개발자에게 문의해주세요.";;
       return {
         "success": false,
-        "content": errorContent
+        "content": e.response?.data['message']
       };
     }
   }
@@ -1571,7 +1570,7 @@ class DalgeurakService {
     try {
       Response response = await _dio.get(
         "$apiUrl/dalgeurak/mealStatus",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $_accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       Map originalData = response.data['mealStatuses'];

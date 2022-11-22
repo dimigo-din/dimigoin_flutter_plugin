@@ -50,6 +50,7 @@ class DimigoinAccount {
       await _storage.delete(key: "dimigoinAccount_refreshToken");
       await _storage.delete(key: "dimigoinAccount_userInfo");
       _userChangeController.add(null);
+      _accessToken = "";
       _isLogin = false;
 
       return true;
@@ -66,7 +67,7 @@ class DimigoinAccount {
     try {
       await _dio.get(
         "$apiUrl/user/me",
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $accessToken'}),
+        options: Options(contentType: "application/json"),
       );
 
       return true;
@@ -85,12 +86,9 @@ class DimigoinAccount {
   /// @returns 갱신에 성공할 경우 true, 실패할 경우 false를 반환합니다.
   refreshAccessToken() async {
     try {
-      String? refreshToken = await _storage.read(key: "dimigoinAccount_refreshToken");
-
       Response response = await _dio.post(
         '$apiUrl/auth/refresh',
-        options: Options(contentType: "application/json", headers: {'Authorization': 'Bearer $refreshToken'}),
-        data: {"refreshtoken": refreshToken},
+        options: Options(contentType: "application/json"),
       );
 
       _accessToken = response.data['accessToken'];

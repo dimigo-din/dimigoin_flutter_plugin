@@ -1,3 +1,8 @@
+## 1.0.0
+
+- **FEAT**: API Request - Token Expired Respond
+- **FEAT**: Dimigoin User Model - Meal BlackList Boolean
+
 ## 0.5.16
 
 - **FIX**: Dalgeurak Service | getAllUserMealException Function

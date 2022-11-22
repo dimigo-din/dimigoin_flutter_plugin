@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:socket_io_client/socket_io_client.dart' as SocketIo;
 
 part 'services/dimigoin_account.dart';
@@ -29,7 +30,7 @@ const dimigoStudentApiUrl = "https://api.dimigo.hs.kr/v1";
 DimigoinAccount _dimigoinLogin = DimigoinAccount();
 DalgeurakService _dalgeurakService = DalgeurakService();
 
-late String _accessToken;
+String _accessToken = "";
 late String? _dimigoStudentAPIAuthToken;
 late DimigoinUser _currentUser;
 bool _isLogin = false;
@@ -41,6 +42,45 @@ class DimigoinFlutterPlugin {
   initializeApp({String? dimigoStudentAPIAuthToken, String? customApiUrl}) async {
     _dimigoStudentAPIAuthToken = dimigoStudentAPIAuthToken;
     if (customApiUrl != null) { apiUrl = customApiUrl; }
+
+    _dio.interceptors.clear();
+    _dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
+        if (options.path == '/auth/refresh') {
+          return handler.next(options);
+        }
+
+        if (options.uri.toString().contains('/auth/refresh')) {
+          String? refreshToken = await _storage.read(key: "dimigoinAccount_refreshToken");
+          options.headers['Authorization'] = 'Bearer $refreshToken';
+        } else {
+          options.headers['Authorization'] = 'Bearer $_accessToken';
+        }
+
+        return handler.next(options);
+      },
+      onError: (DioError err, ErrorInterceptorHandler handler) async {
+        if ((err.response?.requestOptions.path.contains('/auth/refresh'))!) {
+          return handler.next(err);
+        }
+
+
+        if (err.response?.statusCode == 401 && _accessToken.isNotEmpty && JwtDecoder.isExpired(_accessToken)) { //AccessToken이 만료되었을 시
+          bool isTokenRefreshSuccess = await _dimigoinLogin.refreshAccessToken();
+
+          if (isTokenRefreshSuccess) {
+            Response response = await _dio.fetch(err.requestOptions);
+            return handler.resolve(response);
+          } else {
+            return handler.next(err);
+          }
+        } else if (err.response?.statusCode == 403 && (err.response?.data.toString().contains("MISMATCH_TOKEN_VERSION"))!) { //토큰의 버전이 변경되었을 시
+          await _dimigoinLogin.logout();
+          return handler.next(err);
+        }
+        return handler.next(err);
+      },
+    ));
 
     if (await _dimigoinLogin.checkNowLogin()) {
       _accessToken = await _dimigoinLogin.loadSavedToken();
