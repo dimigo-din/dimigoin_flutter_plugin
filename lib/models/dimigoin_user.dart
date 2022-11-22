@@ -186,6 +186,8 @@ class DimigoinUser {
   String? _birthdate;
   String? _libraryId;
   bool? _isExceptionEnter;
+  bool? _isConvenienceBlack;
+  bool? _isExceptionBlack;
 
   int? get id => _id;
   String? get userId => _userId;
@@ -204,7 +206,9 @@ class DimigoinUser {
   List<DimigoinPermissionType>? get permissions => _permissions;
   String? get birthdate => _birthdate;
   String? get libraryId => _libraryId;
-  bool? get isExceptionEtner => _isExceptionEnter;
+  bool? get isExceptionEnter => _isExceptionEnter;
+  bool? get isConvenienceBlack => _isConvenienceBlack;
+  bool? get isExceptionBlack => _isExceptionBlack;
 
 
   DimigoinUser({
@@ -225,7 +229,9 @@ class DimigoinUser {
     required List<DimigoinPermissionType> permissions,
     required String birthdate,
     required String libraryId,
-    required bool isExceptionEnter}){
+    required bool isExceptionEnter,
+    required bool isConvenienceBlack,
+    required bool isExceptionBlack,}){
     _id = id;
     _userId = userId;
     _name = name;
@@ -244,6 +250,8 @@ class DimigoinUser {
     _birthdate = birthdate;
     _libraryId = libraryId;
     _isExceptionEnter = isExceptionEnter;
+    _isConvenienceBlack = isConvenienceBlack;
+    _isExceptionBlack = isExceptionBlack;
 }
 
   DimigoinUser.fromJson(dynamic json) {
@@ -275,6 +283,8 @@ class DimigoinUser {
     _birthdate = json['birthdate'];
     _libraryId = json['libraryId'];
     _isExceptionEnter = json['entered'];
+    _isConvenienceBlack = json['convenienceBlack'];
+    _isExceptionBlack = json['exceptionBlack'];
   }
 
   Map<String, dynamic> toJson() {
@@ -301,6 +311,8 @@ class DimigoinUser {
     map['birthdate'] = _birthdate;
     map['libraryId'] = _libraryId;
     map['entered'] = _isExceptionEnter;
+    map['convenienceBlack'] = _isConvenienceBlack;
+    map['exceptionBlack'] = _isExceptionBlack;
     return map;
   }
 
