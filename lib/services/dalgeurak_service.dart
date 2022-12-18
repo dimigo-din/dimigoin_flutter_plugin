@@ -528,17 +528,23 @@ class DalgeurakService {
     }
   }
 
-  /// 학생이 직접 선/후밥을 취소하는 함수입니다.
-  removeUserMealException() async {
+  /// 선생님이 선/후밥을 취소하는 함수입니다.
+  removeUserMealException(String studentUid, MealType mealType, MealExceptionType excepetionType, String date) async {
     try {
       Response response = await _dio.delete(
         "$apiUrl/dalgeurak/exception",
         options: Options(contentType: "application/json"),
+        data: {
+          "student": studentUid,
+          "time": mealType.convertEngStr,
+          "date": date,
+          "type": excepetionType.convertStr
+        }
       );
 
       return {
         "success": true,
-        "content": response.data['exception']
+        "content": response.data
       };
     } on DioError catch (e) {
       return {
