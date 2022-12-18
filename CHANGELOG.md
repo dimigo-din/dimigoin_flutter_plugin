@@ -1,3 +1,9 @@
+## 1.0.1
+
+- **FEAT**: Dalgeurak Service | Notice
+- **FEAT**: Dalgeurak Service | Application MealException & ConvenienceFood by Teacher
+- **FEAT**: Dalgeurak Service | Remove MealException by Teacher
+
 ## 1.0.0
 
 - **FEAT**: API Request - Token Expired Respond
