@@ -1,3 +1,7 @@
+## 1.0.2
+
+- **FEAT**: Dalgeurak Service | ConvenienceFoodModel MealType Parameter
+
 ## 1.0.1
 
 - **FEAT**: Dalgeurak Service | Notice

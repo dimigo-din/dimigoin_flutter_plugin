@@ -1059,7 +1059,8 @@ class DalgeurakService {
               DalgeurakConvenienceFood(
                 foodType: foodType,
                 student: DimigoinUser.fromJson(element),
-                isCheckin: element['checkin']
+                isCheckin: element['checkin'],
+                mealType: element['time'].toString().convertMealType
               )
             )
           );
@@ -1155,6 +1156,7 @@ class DalgeurakService {
                 DalgeurakConvenienceFood(
                   dateTime: DateTime.tryParse(element2['date']),
                   student: DimigoinUser.fromJson(element2['student']),
+                  mealType: element2['time']
                 )
             );
           }
@@ -1239,7 +1241,7 @@ class DalgeurakService {
 
         formattingData.add({});
 
-        (formattingData[index] as Map).addAll({"student": element['student']});
+        (formattingData[index] as Map).addAll({"student": element['student'], "time": (element['time'] as String).convertMealType});
 
         List formattingDateList = [];
         (element['date'] as List).forEach((element2) => formattingDateList.add(DateTime.parse(element2)));
