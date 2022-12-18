@@ -945,6 +945,27 @@ class DalgeurakService {
     }
   }
 
+  /// 선생님이 간편식을 대신 신청하는 함수입니다.
+  applicationTeacherConvenienceFood(int studentUid, MealType mealType, ConvenienceFoodType foodType) async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/convenience/instead",
+        options: Options(contentType: "application/json"),
+        data: {"sid": studentUid, "time": mealType.convertEngStr, "food": foodType.convertEng},
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 달그락 간편식 체크인에서 금요귀가임을 등록할 수 있는 함수입니다.
   registerFridayHomecomingInConvenienceFood(int studentUid) async {
     try {
