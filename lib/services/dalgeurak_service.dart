@@ -500,23 +500,25 @@ class DalgeurakService {
   }
 
   /// 선생님이 학생에게 선/후밥을 부여하는 함수입니다.
-  setTeacherMealException(MealType mealType, MealExceptionType type, String reason, int studentUid, DateTime selectDate) async {
+  setTeacherMealException(List<MealType> mealTypeList, List<String> dateList, List<MealExceptionType> exceptionTypeList, String reason, List<int> studentUidList) async {
     try {
       Response response = await _dio.post(
-        "$apiUrl/dalgeurak/exception/give",
+        "$apiUrl/dalgeurak/exception/instead",
         options: Options(contentType: "application/json"),
         data: {
-          "type": type.convertStr,
-          "sid": studentUid,
+          "applier": studentUidList[0],
           "reason": reason,
-          "date": DateFormat('yyyy-MM-dd').format(selectDate),
-          "time": mealType.convertEngStr
+          "group": studentUidList.length > 1,
+          "appliers": studentUidList,
+          "time": mealTypeList.map((e) => e.convertEngStr).toList(),
+          "date": dateList,
+          "type": exceptionTypeList.map((e) => e.convertStr).toList(),
         },
       );
 
       return {
         "success": true,
-        "content": response.data
+        "content": response.data['date']
       };
     } on DioError catch (e) {
       return {
