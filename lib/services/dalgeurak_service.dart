@@ -1271,6 +1271,47 @@ class DalgeurakService {
     }
   }
 
+  /// 달그락의 공지사항을 불러오는 함수입니다.
+  getNotice() async {
+    try {
+      Response response = await _dio.get(
+        "$apiUrl/dalgeurak/notice",
+        options: Options(contentType: "application/json"),
+      );
+
+      return {
+        "success": true,
+        "content": response.data['notice']['message']
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
+  /// 달그락의 공지사항을 등록하는 함수입니다.
+  setNotice(String noticeText) async {
+    try {
+      Response response = await _dio.post(
+        "$apiUrl/dalgeurak/notice",
+        options: Options(contentType: "application/json"),
+        data: {"message": noticeText}
+      );
+
+      return {
+        "success": true,
+        "content": response.data
+      };
+    } on DioError catch (e) {
+      return {
+        "success": false,
+        "content": e.response?.data["message"]
+      };
+    }
+  }
+
   /// 학생이 직접 급식 취소를 신청하는 함수입니다.
   applicationUserMealCancel(String reason, DateTime startDate, DateTime endDate, List<MealType> mealTypeList) async {
     try {
