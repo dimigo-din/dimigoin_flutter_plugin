@@ -10,6 +10,7 @@ import 'package:socket_io_client/socket_io_client.dart' as SocketIo;
 
 part 'services/dimigoin_account.dart';
 part 'services/dimigoin_meal.dart';
+part 'services/dimigoin_timetable.dart';
 part 'services/dalgeurak_service.dart';
 part 'models/dimigoin_user.dart';
 part 'models/dalgeurak_warning.dart';

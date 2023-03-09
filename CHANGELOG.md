@@ -1,3 +1,7 @@
+## 1.0.3
+
+- **FEAT**: Dimigoin Student Weekly TimeTable Info
+
 ## 1.0.2
 
 - **FEAT**: Dalgeurak Service | ConvenienceFoodModel MealType Parameter

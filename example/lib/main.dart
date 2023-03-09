@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dimigoin_flutter_plugin/dimigoin_flutter_plugin.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DimigoinFlutterPlugin().initializeApp();
@@ -36,6 +35,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   DimigoinAccount _dimigoinAccount = DimigoinAccount();
   DimigoinMeal _dimigoinMeal = DimigoinMeal();
+  DimigoinTimetable _dimigoinTimetable = DimigoinTimetable();
   DalgeurakService _dalgeurakService = DalgeurakService();
 
   late double _height, _width;
@@ -96,9 +96,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () async => _showToast((await _dimigoinMeal.getDailyMeal(true)).toString()),
                   ),
                   ListTile(
+                    leading: Icon(Icons.list_alt_rounded),
+                    title: Text('주간 시간표 조회'),
+                    onTap: () async => _showToast((await _dimigoinTimetable.getWeeklyTimeTable(2, 3)).toString()),
+                  ),
+                  ListTile(
                     leading: Icon(Icons.fastfood_rounded),
                     title: Text('달그락 API - 내 급식 관련 정보 가져오기'),
-                    onTap: () async => _showToast((await _dalgeurakService.getUserMealInfo()).toString()),
+                    onTap: () async {
+                      dynamic result = await _dalgeurakService.getUserMealInfo();
+                      print(result.toString());
+                      //_showToast((result['content'][0]['breakfast'][0] as DalgeurakConvenienceFood).student!.toJson().toString());
+                    }
                   ),
                 ],
               ),
